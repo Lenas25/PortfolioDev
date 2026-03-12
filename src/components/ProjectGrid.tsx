@@ -22,7 +22,7 @@ export default function ProjectGrid({ projects, lang }: ProjectGridProps) {
   return (
     <>
       <div
-        className="reveal"
+        className="reveal project-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",

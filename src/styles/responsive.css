@@ -211,3 +211,108 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+@media (max-width: 900px) {
+  .project-modal-overlay {
+    padding: 14px !important;
+    align-items: flex-end !important;
+  }
+  .project-modal-panel {
+    max-width: 100% !important;
+    max-height: calc(100vh - 20px) !important;
+    box-shadow: 5px 5px 0 var(--accent) !important;
+  }
+  .project-modal-header {
+    padding: 22px 20px !important;
+  }
+  .project-modal-content {
+    padding: 22px 20px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .project-modal-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .project-modal-close {
+    align-self: flex-end !important;
+  }
+  .project-modal-meta {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .project-modal-overlay {
+    padding: 8px !important;
+  }
+  .project-modal-panel {
+    border-width: 2px !important;
+    max-height: calc(100vh - 12px) !important;
+  }
+  .project-modal-header {
+    padding: 18px 14px !important;
+  }
+  .project-modal-content {
+    padding: 16px 14px !important;
+  }
+  .project-modal-content h3 {
+    font-size: 16px !important;
+  }
+  .project-modal-content p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  .project-modal-link-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
+/* Projects listing page */
+@media (max-width: 1024px) {
+  .projects-page-section {
+    padding: 100px 28px 80px !important;
+  }
+  .projects-page-section .section-title {
+    font-size: clamp(38px, 7vw, 68px) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .project-grid > .project-card {
+    grid-column: span 12 !important;
+  }
+  .project-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .projects-page-section {
+    padding: 92px 20px 64px !important;
+  }
+  .projects-page-header {
+    margin-bottom: 52px !important;
+  }
+  .projects-page-intro {
+    font-size: 15px !important;
+    max-width: 100% !important;
+  }
+  .projects-page-back-wrap {
+    margin-bottom: 34px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .projects-page-section {
+    padding: 88px 14px 56px !important;
+  }
+  .projects-page-back {
+    font-size: 11px !important;
+    letter-spacing: 0.05em !important;
+  }
+}

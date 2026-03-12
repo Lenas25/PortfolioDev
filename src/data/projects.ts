@@ -64,7 +64,7 @@ export const projects: Project[] = [
       "TypeScript",
     ],
     category: ["SaaS", "AI", "Fintech"],
-    links: { demo: "#", github: "#" },
+    links: { demo: "Proximamente", github: "Privado" },
     svgShape: `<circle cx="60" cy="60" r="50" stroke="currentColor" stroke-width="2" opacity="0.3"/>
       <path d="M30 60 L90 60 M60 30 L60 90" stroke="currentColor" stroke-width="2" opacity="0.5"/>
       <circle cx="60" cy="60" r="20" stroke="currentColor" stroke-width="2" opacity="0.4"/>
@@ -118,7 +118,7 @@ export const projects: Project[] = [
       "Twilio API",
     ],
     category: ["Healthcare", "Freelance", "Web App"],
-    links: { demo: "#" },
+    links: { github: "https://github.com/Nakea-Labs/Kintsu-Mind-Web-Page" },
     svgShape: `<rect x="10" y="10" width="80" height="80" stroke="currentColor" stroke-width="2" opacity="0.3"/>
       <rect x="30" y="30" width="40" height="40" stroke="currentColor" stroke-width="2" opacity="0.4"/>
       <circle cx="50" cy="50" r="8" fill="currentColor" opacity="0.5"/>`,
@@ -164,7 +164,7 @@ export const projects: Project[] = [
     },
     stack: ["Flutter", "Dart", "Firebase", "PostgreSQL"],
     category: ["Mobile", "Healthcare"],
-    links: { github: "#" },
+    links: { github: "https://github.com/Lenas25/Qhali", demo: "Proximamente" },
     svgShape: `<polygon points="50,5 95,95 5,95" stroke="currentColor" stroke-width="2" opacity="0.3"/>
       <polygon points="50,30 80,85 20,85" stroke="currentColor" stroke-width="2" opacity="0.4"/>`,
     color: "#FF2D7B",
@@ -212,7 +212,10 @@ export const projects: Project[] = [
       "Firebase",
     ],
     category: ["Mobile", "AI/ML", "Agriculture"],
-    links: { github: "#" },
+    links: {
+      github: "https://github.com/Lenas25/AgroLens",
+      demo: "Proximamente",
+    },
     svgShape: `<circle cx="65" cy="65" r="55" stroke="currentColor" stroke-width="2" opacity="0.2"/>
       <path d="M20 65 Q65 10 110 65 Q65 120 20 65" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
       <circle cx="65" cy="65" r="10" fill="currentColor" opacity="0.3"/>`,
@@ -266,7 +269,7 @@ export const projects: Project[] = [
       "TypeScript",
     ],
     category: ["Education", "SaaS", "Web App"],
-    links: {},
+    links: { demo: "https://alejandracademia.com/", github: "Privado" },
     svgShape: `<line x1="10" y1="90" x2="30" y2="40" stroke="currentColor" stroke-width="3" opacity="0.4"/>
       <line x1="30" y1="40" x2="50" y2="65" stroke="currentColor" stroke-width="3" opacity="0.4"/>
       <line x1="50" y1="65" x2="70" y2="25" stroke="currentColor" stroke-width="3" opacity="0.4"/>
@@ -313,7 +316,7 @@ export const projects: Project[] = [
     },
     stack: ["Next.js", "Firebase", "WebSockets", "Google Auth", "TypeScript"],
     category: ["Marketplace", "SaaS", "Web App"],
-    links: { demo: "#", github: "#" },
+    links: { demo: "Proximamente", github: "Privado" },
     svgShape: `<rect x="15" y="15" width="30" height="30" stroke="currentColor" stroke-width="2" opacity="0.4"/>
       <rect x="55" y="15" width="30" height="30" stroke="currentColor" stroke-width="2" opacity="0.4"/>
       <rect x="15" y="55" width="30" height="30" stroke="currentColor" stroke-width="2" opacity="0.4"/>
@@ -361,7 +364,7 @@ export const projects: Project[] = [
     },
     stack: ["Framer", "Figma", "Google Analytics", "HTML/CSS"],
     category: ["Landing Page", "Web Design", "Conversions"],
-    links: { demo: "#" },
+    links: { demo: "https://www.decormasterclean.com/", github: "Privado" },
     svgShape: `<rect x="15" y="15" width="70" height="70" stroke="currentColor" stroke-width="2" opacity="0.3"/>
       <path d="M35 50 Q50 35 65 50" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
       <circle cx="30" cy="30" r="3" fill="currentColor" opacity="0.5"/>

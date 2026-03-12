@@ -16,12 +16,14 @@ export default function ProjectsPage() {
       <Nav lang={lang} onLangChange={setLang} />
       <main style={{ minHeight: "100vh" }}>
         <section
+          className="projects-page-section"
           style={{
             borderTop: "3px solid var(--border)",
             padding: "120px 40px 100px",
           }}
         >
           <div
+            className="projects-page-container"
             style={{
               maxWidth: "1400px",
               margin: "0 auto",
@@ -29,7 +31,7 @@ export default function ProjectsPage() {
           >
             {/* Header */}
             <div
-              className="reveal"
+              className="reveal projects-page-header"
               style={{
                 marginBottom: 80,
               }}
@@ -45,6 +47,7 @@ export default function ProjectsPage() {
                 </span>
               </h1>
               <p
+                className="projects-page-intro"
                 style={{
                   fontSize: 18,
                   color: "var(--text-muted)",
@@ -59,8 +62,12 @@ export default function ProjectsPage() {
             </div>
 
             {/* Back button */}
-            <div style={{ marginBottom: 60 }}>
+            <div
+              className="projects-page-back-wrap"
+              style={{ marginBottom: 60 }}
+            >
               <a
+                className="projects-page-back"
                 href="/"
                 style={{
                   display: "inline-flex",
