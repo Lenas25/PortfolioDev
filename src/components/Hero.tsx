@@ -170,7 +170,7 @@ export default function Hero({ lang }: HeroProps) {
             {/* Image container */}
             <div className="hero-profile-img">
               <img
-                src="/images/lena-profile.jpg"
+                src="/images/lena-profile.png"
                 alt="Lena - AI Engineer"
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
