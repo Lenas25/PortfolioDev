@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { Project } from "../data/projects";
 import type { Lang } from "../data/i18n";
@@ -13,8 +13,25 @@ interface Props {
 
 export default function ProjectModal({ project, lang, onClose }: Props) {
   const t = translations[lang].projects;
+  const [isMobileSheet, setIsMobileSheet] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 900px)").matches,
+  );
   const isExternalUrl = (value?: string) =>
     Boolean(value && /^(https?:)\/\//i.test(value));
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 900px)");
+    const onChange = (e: MediaQueryListEvent) => setIsMobileSheet(e.matches);
+
+    setIsMobileSheet(mediaQuery.matches);
+    mediaQuery.addEventListener("change", onChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", onChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (project) {
@@ -36,6 +53,7 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
 
   return (
     <motion.div
+      className="project-modal-overlay"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -59,10 +77,27 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
       data-lenis-prevent
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.95, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="project-modal-panel"
+        initial={
+          isMobileSheet
+            ? { y: "100%", opacity: 1, scale: 1 }
+            : { opacity: 0, scale: 0.95, y: 20 }
+        }
+        animate={
+          isMobileSheet
+            ? { y: 0, opacity: 1, scale: 1 }
+            : { opacity: 1, scale: 1, y: 0 }
+        }
+        exit={
+          isMobileSheet
+            ? { y: "100%", opacity: 1, scale: 1 }
+            : { opacity: 0, scale: 0.95, y: 20 }
+        }
+        transition={
+          isMobileSheet
+            ? { type: "spring", stiffness: 340, damping: 34, mass: 0.9 }
+            : { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+        }
         style={{
           background: "var(--bg)",
           border: "3px solid var(--border)",
@@ -74,8 +109,10 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
           position: "relative",
         }}
       >
+        <div className="project-modal-grabber" aria-hidden="true" />
         {/* Header */}
         <div
+          className="project-modal-header"
           style={{
             background: "var(--bg3)",
             borderBottom: "3px solid var(--border)",
@@ -88,13 +125,15 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
             zIndex: 10,
           }}
         >
-          <div>
+          <div style={{ minWidth: 0, flex: 1 }}>
             <div
+              className="project-modal-meta"
               style={{
                 display: "flex",
                 alignItems: "center",
                 gap: 12,
                 marginBottom: 8,
+                flexWrap: "wrap",
               }}
             >
               <span
@@ -135,12 +174,14 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
                 fontWeight: 800,
                 fontSize: "clamp(22px,4vw,32px)",
                 lineHeight: 1.15,
+                overflowWrap: "anywhere",
               }}
             >
               {project.title[lang]}
             </h2>
           </div>
           <motion.button
+            className="project-modal-close"
             onClick={onClose}
             whileHover={{ x: -2, y: -2, transition: { duration: 0.1 } }}
             style={{
@@ -172,7 +213,7 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
         </div>
 
         {/* Content */}
-        <div style={{ padding: "32px" }}>
+        <div className="project-modal-content" style={{ padding: "32px" }}>
           {/* Description */}
           <p
             style={{
@@ -209,6 +250,7 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
               {t.highlights}
             </h3>
             <div
+              id="modal-highlights"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",

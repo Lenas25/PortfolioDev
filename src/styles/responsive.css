@@ -214,13 +214,24 @@
 
 @media (max-width: 900px) {
   .project-modal-overlay {
-    padding: 14px !important;
+    padding: 10px !important;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
     align-items: flex-end !important;
   }
   .project-modal-panel {
     max-width: 100% !important;
-    max-height: calc(100vh - 20px) !important;
+    max-height: calc(100vh - 12px) !important;
+    width: min(100%, 760px) !important;
+    border-radius: 18px 18px 0 0 !important;
+    overflow-x: hidden !important;
     box-shadow: 5px 5px 0 var(--accent) !important;
+  }
+  .project-modal-grabber {
+    width: 48px;
+    height: 5px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--text-muted) 55%, transparent);
+    margin: 10px auto 2px;
   }
   .project-modal-header {
     padding: 22px 20px !important;
@@ -238,26 +249,42 @@
   }
   .project-modal-close {
     align-self: flex-end !important;
+    font-size: 11px !important;
+    padding: 6px 10px !important;
+    border-width: 2px !important;
+    box-shadow: 2px 2px 0 var(--border) !important;
   }
   .project-modal-meta {
     flex-wrap: wrap !important;
     gap: 8px !important;
   }
+  .project-modal-meta > span {
+    font-size: 10px !important;
+    padding: 2px 8px !important;
+  }
 }
 
 @media (max-width: 600px) {
   .project-modal-overlay {
-    padding: 8px !important;
+    padding: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom) !important;
   }
   .project-modal-panel {
     border-width: 2px !important;
-    max-height: calc(100vh - 12px) !important;
+    border-bottom: 0 !important;
+    max-height: 92vh !important;
+    width: 100% !important;
+    border-radius: 18px 18px 0 0 !important;
+    box-shadow:
+      0 -2px 0 var(--border),
+      0 -8px 30px rgba(0, 0, 0, 0.35) !important;
   }
   .project-modal-header {
     padding: 18px 14px !important;
   }
   .project-modal-content {
-    padding: 16px 14px !important;
+    padding: 16px 14px 20px !important;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom)) !important;
   }
   .project-modal-content h3 {
     font-size: 16px !important;
@@ -265,6 +292,14 @@
   .project-modal-content p {
     font-size: 14px !important;
     line-height: 1.6 !important;
+  }
+  .project-modal-header h2 {
+    font-size: clamp(20px, 8vw, 26px) !important;
+    line-height: 1.1 !important;
+  }
+  #modal-highlights > div {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
   }
   .project-modal-link-btn {
     width: 100% !important;
