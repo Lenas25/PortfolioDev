@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Tailwind v4 theme extensions */
+@theme {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  
+  --animate-float: float 8s ease-in-out infinite;
+  --animate-spin: spin 24s linear infinite;
+  --animate-pulse: pulse 2s ease infinite;
+  --animate-bounce-slow: bounce 2s ease infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-24px); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(10px); }
+}
