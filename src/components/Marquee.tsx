@@ -1,41 +1,36 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 const items = [
-  'AI Engineering', 'LangChain · LangGraph', 'Next.js', 'FastAPI',
-  'N8N Automation', 'Pydantic AI', 'Full Stack Dev', 'GCP · Azure',
-  'Flutter Mobile', 'Prompt Engineering',
+  "AI Engineering",
+  "LangChain · LangGraph",
+  "Next.js",
+  "FastAPI",
+  "N8N Automation",
+  "Pydantic AI",
+  "Full Stack Dev",
+  "GCP · Azure",
+  "Flutter Mobile",
+  "Prompt Engineering",
 ];
 
 export default function Marquee() {
   const doubled = [...items, ...items];
 
   return (
-    <div style={{
-      borderTop: '3px solid var(--border)',
-      borderBottom: '3px solid var(--border)',
-      background: 'var(--accent)',
-      padding: '13px 0',
-      overflow: 'hidden',
-      whiteSpace: 'nowrap',
-    }}>
+    <div className="marquee-shell">
       <motion.div
-        animate={{ x: ['0%', '-50%'] }}
+        animate={{ x: ["0%", "-50%"] }}
         transition={{
           duration: 18,
-          ease: 'linear',
+          ease: "linear",
           repeat: Infinity,
         }}
-        style={{ display: 'inline-flex' }}
+        className="marquee-track"
       >
         {doubled.map((item, i) => (
-          <span key={i} style={{
-            fontFamily: 'var(--font-display)', fontWeight: 800,
-            fontSize: 15, letterSpacing: '0.06em', textTransform: 'uppercase',
-            color: '#fff', padding: '0 28px',
-            display: 'inline-flex', alignItems: 'center', gap: 14,
-          }}>
+          <span key={i} className="marquee-item">
             {item}
-            <span style={{ opacity: 0.45 }}>✦</span>
+            <span className="marquee-sep">✦</span>
           </span>
         ))}
       </motion.div>

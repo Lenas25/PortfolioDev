@@ -50,6 +50,7 @@ export default function Nav({
       }}
     >
       <div
+        className="nav-inner"
         style={{
           width:
             "min(var(--content-max), calc(100% - (var(--page-gutter) * 2)))",
@@ -62,6 +63,7 @@ export default function Nav({
       >
         {/* Logo */}
         <a
+          className="nav-logo"
           href={useHomeAnchors ? "#hero" : "/"}
           style={{
             fontFamily: "var(--font-display)",
@@ -76,6 +78,7 @@ export default function Nav({
         >
           lena
           <span
+            className="nav-logo-badge"
             style={{
               background: "var(--accent)",
               color: "#fff",
@@ -216,6 +219,7 @@ export default function Nav({
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            className="nav-mobile-menu"
             key="mobile-menu"
             initial={{ opacity: 0, y: -16 }}
             animate={{ opacity: 1, y: 0 }}

@@ -1124,6 +1124,37 @@ section {
     transform: translateX(-50%);
   }
 }
+
+/* ===== MARQUEE ===== */
+.marquee-shell {
+  border-top: 3px solid var(--border);
+  border-bottom: 3px solid var(--border);
+  background: var(--accent);
+  padding: 13px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-track {
+  display: inline-flex;
+}
+
+.marquee-item {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 0 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.marquee-sep {
+  opacity: 0.45;
+}
 @keyframes slideIn {
   from {
     opacity: 0;
