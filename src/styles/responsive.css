@@ -33,103 +33,207 @@
 /* Hero */
 @media (max-width: 1024px) {
   #hero {
-    grid-template-columns: 1fr !important;
-    padding: 100px 30px 60px !important;
+    min-height: auto !important;
   }
-  .hero-right {
-    align-items: center !important;
-  }
-  .hero-top-row {
-    justify-content: center !important;
-  }
-  .hero-badges {
-    justify-content: center !important;
+  .hero-inner {
+    min-height: auto !important;
+    padding-top: 124px !important;
+    padding-bottom: 76px !important;
   }
 }
 
 @media (max-width: 768px) {
+  .section-content {
+    padding-top: 60px !important;
+    padding-bottom: 60px !important;
+  }
+
   #hero {
-    grid-template-columns: 1fr !important;
-    padding: 100px 20px 60px !important;
+    min-height: auto !important;
   }
-  .hero-right {
-    align-items: stretch !important;
-  }
-  .hero-top-row {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  .hero-profile {
-    width: 140px !important;
-  }
-  .hero-card-1 {
-    width: 100% !important;
-    min-width: auto !important;
-    flex: none !important;
-  }
-  .hero-badges {
-    justify-content: center !important;
+  .hero-inner {
+    min-height: auto !important;
+    padding-top: 108px !important;
+    padding-bottom: 64px !important;
   }
 }
 
 @media (max-width: 480px) {
   #hero {
-    padding: 90px 16px 50px !important;
+    min-height: auto !important;
   }
-  .hero-profile {
-    width: 120px !important;
+  .hero-inner {
+    padding-top: 96px !important;
+    padding-bottom: 56px !important;
   }
 }
 
 /* About */
 @media (max-width: 768px) {
-  #about {
+  #about > .section-content {
     grid-template-columns: 1fr !important;
-    padding: 60px 20px !important;
   }
 }
 @media (max-width: 500px) {
-  #about > div:last-child > div:first-child {
+  .about-values-grid {
     grid-template-columns: 1fr !important;
-  }
-}
-
-/* Skills */
-@media (max-width: 768px) {
-  #skills {
-    padding: 60px 20px !important;
   }
 }
 
 /* Projects */
 @media (max-width: 900px) {
-  #projects > div:last-child > div {
+  .project-grid > div {
     grid-column: span 12 !important;
   }
-  #projects > div:last-child {
+  .project-grid {
     grid-template-columns: 1fr !important;
-  }
-}
-@media (max-width: 768px) {
-  #projects {
-    padding: 60px 20px !important;
   }
 }
 
 /* Experience */
-@media (max-width: 768px) {
-  #experience {
-    padding: 60px 20px !important;
-  }
-  #experience > div:last-child {
+@media (max-width: 1024px) {
+  .experience-layout {
     grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+  .experience-main {
+    gap: 18px !important;
+  }
+  .experience-aside {
+    position: static !important;
+    top: auto !important;
+  }
+  .experience-card-dark h3 {
+    font-size: clamp(24px, 5vw, 32px) !important;
   }
 }
 
-/* Toolbox */
 @media (max-width: 768px) {
-  #toolbox {
-    padding: 60px 20px !important;
+  #experience > .section-content > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+  .experience-timeline {
+    padding: 20px 14px 14px 20px !important;
+    box-shadow: 5px 5px 0 var(--border) !important;
+  }
+  .experience-timeline::before {
+    left: 13px !important;
+  }
+  .experience-line-progress {
+    left: 13px !important;
+  }
+  .experience-item {
+    padding-left: 12px !important;
+  }
+  .experience-dot {
+    left: -9px !important;
+  }
+  .experience-item-head {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .experience-step {
+    top: 8px !important;
+    right: 8px !important;
+    min-width: 30px !important;
+    height: 18px !important;
+    font-size: 10px !important;
+  }
+  .experience-role {
+    font-size: clamp(20px, 7vw, 28px) !important;
+  }
+  .experience-logo {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 10px !important;
+  }
+  .experience-card {
+    padding: 14px !important;
+    box-shadow: 5px 5px 0 var(--border) !important;
+  }
+  .journey-timeline {
+    padding: 18px 12px 12px 18px !important;
+    box-shadow: 5px 5px 0 color-mix(in srgb, var(--accent) 52%, var(--bg)) !important;
+  }
+  .journey-timeline::before {
+    left: 11px !important;
+  }
+  .journey-entry {
+    padding-left: 10px !important;
+  }
+  .journey-entry-body {
+    padding-right: 56px !important;
+  }
+  .journey-dot {
+    left: -8px !important;
+  }
+  .journey-step {
+    top: 6px !important;
+    right: 6px !important;
+  }
+  .journey-item-head {
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .skills-featured-stage {
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--accent2) 50%, transparent),
+      7px 7px 0 color-mix(in srgb, var(--accent2) 54%, var(--bg)) !important;
+    padding: 16px 12px 12px !important;
+  }
+  .skills-sticker {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+  .skills-fav-pill {
+    font-size: 12px !important;
+    padding: 7px 10px !important;
+    box-shadow: 3px 3px 0 var(--border) !important;
+  }
+  .skills-category-title {
+    font-size: 19px !important;
+    line-height: 1 !important;
+    letter-spacing: 0.02em !important;
+  }
+  .skills-track-chip {
+    font-size: 9px !important;
+    letter-spacing: 0.1em !important;
+    padding: 4px 7px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-featured-stage {
+    margin-top: -10px !important;
+    margin-bottom: 26px !important;
+    padding-top: 38px !important;
+  }
+  .skills-featured-rack {
+    gap: 8px !important;
+  }
+  .skills-sticker-left {
+    top: 7px !important;
+    left: 7px !important;
+  }
+  .skills-sticker-right {
+    top: 7px !important;
+    right: 7px !important;
+  }
+  .skills-fav-pill {
+    font-size: 11px !important;
+    padding: 7px 9px !important;
+  }
+  .skills-category-title {
+    font-size: 16px !important;
+    transform: none !important;
+  }
+  .skills-track-chip {
+    box-shadow: 2px 2px 0 var(--border) !important;
   }
 }
 
@@ -150,9 +254,6 @@
   }
 }
 @media (max-width: 768px) {
-  #contact {
-    padding: 60px 20px !important;
-  }
   #contact h2 {
     font-size: clamp(28px, 7vw, 48px) !important;
     word-wrap: break-word;
@@ -170,7 +271,7 @@
   nav > div:last-child {
     gap: 8px !important;
   }
-  /* Hide CV download and hire CTA on tablets/mobile, keep lang/theme toggles */
+  /* Hide CV download and hire CTA on tablets/mobile */
   nav .nav-extra-controls a[href="/cv-lena.pdf"],
   nav .nav-extra-controls .nav-cta-hire {
     display: none !important;
@@ -178,15 +279,41 @@
 }
 @media (max-width: 600px) {
   nav {
-    padding: 12px 16px !important;
+    padding: 12px 0 !important;
   }
   nav > a {
     font-size: 16px !important;
   }
-  /* On small mobile, hide most controls, show only essential */
   nav .nav-extra-controls a[href="/cv-lena.pdf"],
   nav .nav-extra-controls .nav-cta-hire {
     display: none !important;
+  }
+}
+
+/* Floating controls dock */
+@media (max-width: 480px) {
+  .floating-controls-dock {
+    top: auto !important;
+    bottom: 20px !important;
+    transform: none !important;
+    flex-direction: row !important;
+    right: 16px !important;
+  }
+  .floating-controls-dock > button {
+    border: 3px solid var(--border) !important;
+    border-bottom: none !important;
+    border-right: none !important;
+    box-shadow: -4px -4px 0 var(--accent) !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    padding: 8px 12px !important;
+  }
+  .floating-controls-dock > button:first-child {
+    border-right: none !important;
+  }
+  .floating-controls-dock > div {
+    width: 3px !important;
+    height: auto !important;
   }
 }
 
@@ -195,7 +322,7 @@
   footer {
     flex-direction: column !important;
     text-align: center;
-    padding: 22px 16px !important;
+    padding: 22px 0 !important;
     font-size: 11px !important;
     gap: 12px !important;
   }
@@ -309,8 +436,9 @@
 
 /* Projects listing page */
 @media (max-width: 1024px) {
-  .projects-page-section {
-    padding: 100px 28px 80px !important;
+  .projects-page-container.section-content {
+    padding-top: 100px !important;
+    padding-bottom: 80px !important;
   }
   .projects-page-section .section-title {
     font-size: clamp(38px, 7vw, 68px) !important;

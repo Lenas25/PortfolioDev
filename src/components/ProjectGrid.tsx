@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Project } from "../data/projects";
 import type { Lang } from "../data/i18n";
@@ -17,12 +17,13 @@ interface ProjectGridProps {
 
 export default function ProjectGrid({ projects, lang }: ProjectGridProps) {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const handleClose = useCallback(() => setActiveProject(null), []);
   const t = translations[lang].projects;
 
   return (
     <>
       <div
-        className="reveal project-grid"
+        className="project-grid"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(12, 1fr)",
@@ -35,8 +36,25 @@ export default function ProjectGrid({ projects, lang }: ProjectGridProps) {
             className="project-card"
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
+            whileHover={{
+              x: -3,
+              y: -3,
+              boxShadow: "8px 8px 0 var(--accent)",
+              transition: { duration: 0.12 },
+            }}
+            whileTap={{
+              x: 2,
+              y: 2,
+              boxShadow: "2px 2px 0 var(--accent)",
+              transition: { duration: 0.08 },
+            }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ delay: i * 0.05, duration: 0.7 }}
+            transition={{
+              opacity: { duration: 0.7, delay: i * 0.05 },
+              y: { duration: 0.7, delay: i * 0.05 },
+              x: { duration: 0.12 },
+              boxShadow: { duration: 0.12 },
+            }}
             onClick={() => setActiveProject(proj)}
             style={{
               gridColumn: `span ${PROJECT_GRID_COLS[i % PROJECT_GRID_COLS.length]}`,
@@ -183,9 +201,10 @@ export default function ProjectGrid({ projects, lang }: ProjectGridProps) {
       <AnimatePresence>
         {activeProject && (
           <ProjectModal
+            key={activeProject.id}
             project={activeProject}
             lang={lang}
-            onClose={() => setActiveProject(null)}
+            onClose={handleClose}
           />
         )}
       </AnimatePresence>

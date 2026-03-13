@@ -1,83 +1,7 @@
 import { motion } from "framer-motion";
 import type { Lang } from "../data/i18n";
 import { translations } from "../data/i18n";
-import { TOOLS_LIST, WHATSAPP_NUMBER } from "../data/constants";
-
-export function Toolbox({ lang }: { lang: Lang }) {
-  const t = translations[lang].toolbox;
-
-  return (
-    <section
-      id="toolbox"
-      style={{
-        borderTop: "3px solid var(--border)",
-        padding: "100px 40px",
-        textAlign: "center",
-      }}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7 }}
-      >
-        <div className="section-label" style={{ justifyContent: "center" }}>
-          {t.label}
-        </div>
-        <h2 className="section-title" style={{ marginBottom: 0 }}>
-          {t.title1} <span style={{ color: "var(--accent)" }}>{t.title2}</span>
-        </h2>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 32 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7 }}
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 14,
-          marginTop: 56,
-          justifyContent: "center",
-        }}
-      >
-        {TOOLS_LIST.map((tool, i) => (
-          <motion.div
-            key={i}
-            whileHover={{
-              background: "var(--accent)",
-              color: "#fff",
-              x: -2,
-              y: -2,
-              transition: { duration: 0.12 },
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.02, duration: 0.5 }}
-            style={{
-              fontFamily: "var(--font-body)",
-              fontWeight: 700,
-              fontSize: 14,
-              padding: "10px 20px",
-              border: "3px solid var(--border)",
-              background: "var(--card-bg)",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              cursor: "default",
-              transition:
-                "transform 0.1s, box-shadow 0.1s, background 0.1s, color 0.1s",
-            }}
-          >
-            {tool}
-          </motion.div>
-        ))}
-      </motion.div>
-    </section>
-  );
-}
+import { WHATSAPP_NUMBER } from "../data/constants";
 
 // ===== CONTACT =====
 export function Contact({ lang }: { lang: Lang }) {
@@ -85,18 +9,17 @@ export function Contact({ lang }: { lang: Lang }) {
   const whatsappMsg = encodeURIComponent(
     lang === "en"
       ? "Hi Lena! I saw your portfolio and I'd love to talk about a project!"
-      : "Hola Lena! Vi tu portfolio y me gustaría hablar sobre un proyecto!",
+      : "Hola Lena! Vi tu portfolio y me gustaria hablar sobre un proyecto!",
   );
 
   return (
     <section
       id="contact"
+      className="section-shell"
       style={{
         borderTop: "3px solid var(--border)",
-        padding: "100px 40px",
         textAlign: "center",
         position: "relative",
-        overflow: "hidden",
       }}
     >
       {/* BG text */}
@@ -120,7 +43,10 @@ export function Contact({ lang }: { lang: Lang }) {
         BUILD
       </div>
 
-      <div style={{ position: "relative", zIndex: 1 }}>
+      <div
+        className="section-content"
+        style={{ position: "relative", zIndex: 1 }}
+      >
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -181,7 +107,6 @@ export function Contact({ lang }: { lang: Lang }) {
             marginBottom: 48,
           }}
         >
-          {/* Email */}
           <a href="mailto:lenaspdev@gmail.com" className="btn-primary">
             <svg
               width="18"
@@ -200,12 +125,11 @@ export function Contact({ lang }: { lang: Lang }) {
             {t.email}
           </a>
 
-          {/* WhatsApp */}
-          <motion.a
+          <a
             href={`https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMsg}`}
             target="_blank"
             rel="noopener"
-            whileHover={{ x: -3, y: -3, transition: { duration: 0.12 } }}
+            className="retro-press retro-press-border"
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 800,
@@ -217,22 +141,20 @@ export function Contact({ lang }: { lang: Lang }) {
               color: "#fff",
               border: "3px solid var(--border)",
               boxShadow: "5px 5px 0 var(--border)",
-              cursor: "pointer",
+              cursor: "none",
               textDecoration: "none",
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              transition: "transform 0.12s, box-shadow 0.12s",
             }}
           >
             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
             </svg>
             {t.whatsapp}
-          </motion.a>
+          </a>
         </motion.div>
 
-        {/* Social links */}
         <motion.div
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -289,19 +211,12 @@ export function Contact({ lang }: { lang: Lang }) {
               ),
             },
           ].map((s) => (
-            <motion.a
+            <a
               key={s.href}
               href={s.href}
               target="_blank"
               rel="noopener"
-              whileHover={{
-                background: "var(--accent)",
-                color: "#fff",
-                borderColor: "var(--accent)",
-                x: -2,
-                y: -2,
-                transition: { duration: 0.12 },
-              }}
+              className="retro-press retro-press-border retro-press-tight"
               style={{
                 fontFamily: "var(--font-body)",
                 fontWeight: 800,
@@ -311,16 +226,17 @@ export function Contact({ lang }: { lang: Lang }) {
                 color: "var(--text)",
                 textDecoration: "none",
                 border: "2px solid var(--border)",
+                background: "var(--card-bg)",
+                boxShadow: "4px 4px 0 var(--border)",
                 padding: "10px 20px",
                 display: "flex",
                 alignItems: "center",
                 gap: 8,
-                transition:
-                  "transform 0.12s, box-shadow 0.12s, background 0.12s",
+                cursor: "none",
               }}
             >
               {s.icon} {s.label}
-            </motion.a>
+            </a>
           ))}
         </motion.div>
       </div>
@@ -335,33 +251,44 @@ export function Footer({ lang }: { lang: Lang }) {
     <footer
       style={{
         borderTop: "3px solid var(--border)",
-        padding: "22px 40px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
+        padding: "22px 0",
         fontSize: 13,
         fontWeight: 600,
         color: "var(--text-muted)",
-        flexWrap: "wrap",
-        gap: 10,
       }}
     >
-      <div>{t.copy}</div>
-      <div>{t.stack}</div>
-      <div style={{ display: "flex", gap: 16 }}>
-        <a href="#" style={{ color: "var(--accent)", textDecoration: "none" }}>
-          Privacy
-        </a>
-        <a
-          href="#hero"
-          onClick={(e: React.MouseEvent) => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-          style={{ color: "var(--accent)", textDecoration: "none" }}
-        >
-          {t.back}
-        </a>
+      <div
+        style={{
+          width:
+            "min(var(--content-max), calc(100% - (var(--page-gutter) * 2)))",
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 10,
+        }}
+      >
+        <div>{t.copy}</div>
+        <div>{t.stack}</div>
+        <div style={{ display: "flex", gap: 16 }}>
+          <a
+            href="#"
+            style={{ color: "var(--accent)", textDecoration: "none" }}
+          >
+            Privacy
+          </a>
+          <a
+            href="#hero"
+            onClick={(e: React.MouseEvent) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            style={{ color: "var(--accent)", textDecoration: "none" }}
+          >
+            {t.back}
+          </a>
+        </div>
       </div>
     </footer>
   );

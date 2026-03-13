@@ -1,37 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import type { Lang } from "../data/i18n";
 import { translations } from "../data/i18n";
 import { projects } from "../data/projects";
 import { useLenis } from "../hooks/useLenis";
 import ProjectGrid from "./ProjectGrid";
 import Nav from "./Nav";
+import FloatingControls from "./FloatingControls";
 import { Footer } from "./Sections";
 
 export default function ProjectsPage() {
   const [lang, setLang] = useState<Lang>("es");
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   useLenis();
+
+  useEffect(() => {
+    const stored =
+      (localStorage.getItem("theme") as "dark" | "light") || "dark";
+    setTheme(stored);
+    document.documentElement.setAttribute("data-theme", stored);
+  }, []);
+
+  const toggleTheme = () => {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    document.documentElement.setAttribute("data-theme", next);
+    localStorage.setItem("theme", next);
+  };
 
   return (
     <>
-      <Nav lang={lang} onLangChange={setLang} />
+      <Nav lang={lang} onLangChange={setLang} useHomeAnchors={false} />
+      <FloatingControls
+        lang={lang}
+        onLangChange={setLang}
+        theme={theme}
+        onThemeToggle={toggleTheme}
+      />
       <main style={{ minHeight: "100vh" }}>
         <section
-          className="projects-page-section"
+          className="projects-page-section section-shell"
           style={{
             borderTop: "3px solid var(--border)",
-            padding: "120px 40px 100px",
           }}
         >
           <div
-            className="projects-page-container"
+            className="projects-page-container section-content"
             style={{
-              maxWidth: "1400px",
-              margin: "0 auto",
+              paddingTop: 120,
+              paddingBottom: 100,
             }}
           >
             {/* Header */}
-            <div
-              className="reveal projects-page-header"
+            <motion.div
+              className="projects-page-header"
+              initial={{ opacity: 0, y: 32 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{
                 marginBottom: 80,
               }}
@@ -59,7 +84,7 @@ export default function ProjectsPage() {
                   ? "Explora todos nuestros proyectos completados, desde aplicaciones móviles hasta plataformas SaaS, sistemas de gestión y landing pages de alto rendimiento."
                   : "Explore all our completed projects, from mobile applications to SaaS platforms, management systems and high-performance landing pages."}
               </p>
-            </div>
+            </motion.div>
 
             {/* Back button */}
             <div

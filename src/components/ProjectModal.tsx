@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { Project } from "../data/projects";
 import type { Lang } from "../data/i18n";
@@ -12,7 +12,15 @@ interface Props {
 }
 
 export default function ProjectModal({ project, lang, onClose }: Props) {
+  const useIsoLayoutEffect =
+    typeof window !== "undefined" ? useLayoutEffect : useEffect;
   const t = translations[lang].projects;
+  const accentCycle = [
+    "var(--accent)",
+    "var(--accent2)",
+    "var(--accent3)",
+    project?.color ?? "var(--accent)",
+  ];
   const [isMobileSheet, setIsMobileSheet] = useState(
     () =>
       typeof window !== "undefined" &&
@@ -33,21 +41,41 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
     };
   }, []);
 
-  useEffect(() => {
-    if (project) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+  // Apply scroll lock before paint to avoid one-frame flash when opening modal.
+  useIsoLayoutEffect(() => {
+    if (!project) return;
+    const root = document.documentElement;
+    const scrollbarWidth = Math.max(0, window.innerWidth - root.clientWidth);
+
+    const prevRootOverflow = root.style.overflow;
+    const prevRootPadding = root.style.paddingRight;
+    const prevOverflow = document.body.style.overflow;
+    const prevPadding = document.body.style.paddingRight;
+
+    root.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    if (scrollbarWidth > 0) {
+      const lockPadding = `${scrollbarWidth}px`;
+      root.style.paddingRight = lockPadding;
+      document.body.style.paddingRight = lockPadding;
     }
+
+    return () => {
+      root.style.overflow = prevRootOverflow;
+      root.style.paddingRight = prevRootPadding;
+      document.body.style.overflow = prevOverflow;
+      document.body.style.paddingRight = prevPadding;
+    };
+  }, [project]);
+
+  // Keyboard listener — isolated so onClose instability never retriggers scroll lock
+  useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [project, onClose]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
 
   if (!project) return null;
 
@@ -57,17 +85,24 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.12, ease: "easeOut" }}
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 1000,
-        background: "rgba(8,11,20,0.88)",
-        backdropFilter: "blur(8px)",
+        background: `
+          radial-gradient(circle at 18% 14%, color-mix(in srgb, ${project.color} 34%, transparent), transparent 48%),
+          radial-gradient(circle at 88% 22%, color-mix(in srgb, var(--accent2) 24%, transparent), transparent 45%),
+          radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--accent3) 18%, transparent), transparent 55%),
+          rgba(8,11,20,0.84)
+        `,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         padding: "20px",
+        willChange: "opacity",
+        backfaceVisibility: "hidden",
+        WebkitBackfaceVisibility: "hidden",
       }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
@@ -81,32 +116,43 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
         initial={
           isMobileSheet
             ? { y: "100%", opacity: 1, scale: 1 }
-            : { opacity: 0, scale: 0.95, y: 20 }
+            : { opacity: 0, y: 12, scale: 0.985 }
         }
         animate={
           isMobileSheet
             ? { y: 0, opacity: 1, scale: 1 }
-            : { opacity: 1, scale: 1, y: 0 }
+            : { opacity: 1, y: 0, scale: 1 }
         }
         exit={
           isMobileSheet
             ? { y: "100%", opacity: 1, scale: 1 }
-            : { opacity: 0, scale: 0.95, y: 20 }
+            : { opacity: 0, y: 8, scale: 0.99 }
         }
         transition={
           isMobileSheet
-            ? { type: "spring", stiffness: 340, damping: 34, mass: 0.9 }
-            : { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }
+            ? { type: "spring", stiffness: 300, damping: 32, mass: 0.9 }
+            : { duration: 0.18, ease: "easeOut" }
         }
         style={{
-          background: "var(--bg)",
+          background: `linear-gradient(145deg,
+            color-mix(in srgb, var(--bg) 86%, ${project.color}),
+            color-mix(in srgb, var(--bg2) 92%, var(--accent2))
+          )`,
           border: "3px solid var(--border)",
-          boxShadow: `8px 8px 0 ${project.color}`,
+          boxShadow: `
+            8px 8px 0 color-mix(in srgb, ${project.color} 78%, var(--border)),
+            0 24px 60px rgba(0, 0, 0, 0.35)
+          `,
           width: "100%",
           maxWidth: 800,
           maxHeight: "90vh",
           overflowY: "auto",
           position: "relative",
+          contain: "paint",
+          willChange: "transform, opacity",
+          transform: "translateZ(0)",
+          backfaceVisibility: "hidden",
+          WebkitBackfaceVisibility: "hidden",
         }}
       >
         <div className="project-modal-grabber" aria-hidden="true" />
@@ -114,7 +160,10 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
         <div
           className="project-modal-header"
           style={{
-            background: "var(--bg3)",
+            background: `linear-gradient(90deg,
+              color-mix(in srgb, ${project.color} 24%, var(--bg3)),
+              color-mix(in srgb, var(--accent2) 14%, var(--bg3))
+            )`,
             borderBottom: "3px solid var(--border)",
             padding: "28px 32px",
             display: "flex",
@@ -181,31 +230,21 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
             </h2>
           </div>
           <motion.button
-            className="project-modal-close"
+            className="project-modal-close retro-press retro-press-border"
             onClick={onClose}
-            whileHover={{ x: -2, y: -2, transition: { duration: 0.1 } }}
             style={{
               fontFamily: "var(--font-body)",
               fontWeight: 800,
               fontSize: 12,
               letterSpacing: "0.08em",
               textTransform: "uppercase",
-              background: "var(--accent)",
-              color: "#fff",
+              background:
+                "linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent2) 35%, var(--accent)))",
+              color: "var(--white)",
               border: "3px solid var(--border)",
-              boxShadow: "3px 3px 0 var(--border)",
+              boxShadow: "5px 5px 0 var(--border)",
               padding: "8px 16px",
-              cursor: "pointer",
               flexShrink: 0,
-              transition: "transform 0.1s, box-shadow 0.1s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translate(-2px,-2px)";
-              e.currentTarget.style.boxShadow = "5px 5px 0 var(--border)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "";
-              e.currentTarget.style.boxShadow = "3px 3px 0 var(--border)";
             }}
           >
             ✕ {t.close}
@@ -260,9 +299,14 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
               {project.highlights[lang].map((h, i) => (
                 <div
                   key={i}
+                  data-accent={i % accentCycle.length}
                   style={{
                     border: "2px solid var(--border)",
-                    background: "var(--bg2)",
+                    borderLeft: `6px solid ${accentCycle[i % accentCycle.length]}`,
+                    background: `linear-gradient(120deg,
+                      color-mix(in srgb, ${accentCycle[i % accentCycle.length]} 10%, var(--bg2)),
+                      var(--bg2)
+                    )`,
                     padding: "12px 16px",
                     fontSize: 14,
                     fontWeight: 600,
@@ -315,12 +359,12 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
                 <span
                   key={tech}
                   style={{
+                    backgroundColor: `color-mix(in srgb, ${accentCycle[Math.abs(tech.length) % accentCycle.length]} 20%, var(--bg2))`,
                     fontFamily: "var(--font-body)",
                     fontWeight: 700,
                     fontSize: 13,
                     padding: "7px 16px",
-                    background: "var(--accent)",
-                    color: "#fff",
+                    color: "var(--text)",
                     border: "2px solid var(--border)",
                   }}
                 >
