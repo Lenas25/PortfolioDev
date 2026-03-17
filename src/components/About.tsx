@@ -1,56 +1,228 @@
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import type { Lang } from "../data/i18n";
 import { translations } from "../data/i18n";
+import { useCountUp, formatCountUp } from "../hooks/useCountUp";
+
+// Iconos SVG minimalistas para cada stat
+const StatIcons = {
+  rocket: (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+      <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+      <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+      <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+    </svg>
+  ),
+  briefcase: (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+      <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+    </svg>
+  ),
+  sparkles: (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+      <path d="M5 3v4" />
+      <path d="M19 17v4" />
+      <path d="M3 5h4" />
+      <path d="M17 19h4" />
+    </svg>
+  ),
+};
+
+// Componente de stat minimalista con count-up
+function MinimalStat({
+  icon,
+  value,
+  suffix,
+  label,
+  accent,
+  delay,
+  inView,
+}: {
+  icon: React.ReactNode;
+  value: number;
+  suffix?: string;
+  label: string;
+  accent: string;
+  delay: number;
+  inView: boolean;
+}) {
+  const { count } = useCountUp({
+    end: value,
+    duration: 2000,
+    delay: delay,
+    enabled: inView,
+  });
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: delay / 1000 }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 8,
+        textAlign: "center",
+      }}
+    >
+      <div
+        style={{
+          width: 48,
+          height: 48,
+          borderRadius: "50%",
+          background: `color-mix(in srgb, ${accent} 20%, transparent)`,
+          color: accent,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginBottom: 4,
+        }}
+      >
+        {icon}
+      </div>
+      <div
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 800,
+          fontSize: "clamp(32px, 5vw, 42px)",
+          lineHeight: 1,
+          color: accent,
+        }}
+      >
+        {formatCountUp(count, suffix, 0)}
+      </div>
+      <div
+        style={{
+          fontSize: 13,
+          fontWeight: 600,
+          color: "var(--text-muted)",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+        }}
+      >
+        {label}
+      </div>
+    </motion.div>
+  );
+}
+
+// Componente de progress bar animada
+function AnimatedProgress({
+  value,
+  color,
+  delay,
+  inView,
+}: {
+  value: number;
+  color: string;
+  delay: number;
+  inView: boolean;
+}) {
+  return (
+    <motion.div
+      style={{
+        height: 4,
+        background: "color-mix(in srgb, var(--border) 20%, transparent)",
+        borderRadius: 2,
+        overflow: "hidden",
+        marginTop: 8,
+      }}
+    >
+      <motion.div
+        initial={{ width: 0 }}
+        animate={inView ? { width: `${value}%` } : { width: 0 }}
+        transition={{ duration: 1.5, delay: delay / 1000, ease: "easeOut" }}
+        style={{
+          height: "100%",
+          background: color,
+          borderRadius: 2,
+        }}
+      />
+    </motion.div>
+  );
+}
 
 export default function About({ lang }: { lang: Lang }) {
   const t = translations[lang].about;
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
+  // Stats con valores numéricos para count-up
   const stats = [
-    { num: t.stat1Num, label: t.stat1Label, sub: t.stat1Sub },
-    { num: t.stat2Num, label: t.stat2Label, sub: t.stat2Sub },
-    { num: t.stat3Num, label: t.stat3Label, sub: t.stat3Sub },
+    {
+      icon: StatIcons.rocket,
+      value: 10,
+      suffix: "+",
+      label: t.stat1Label,
+      sub: t.stat1Sub,
+      accent: "var(--accent3)",
+      progress: 85,
+    },
+    {
+      icon: StatIcons.briefcase,
+      value: 5,
+      suffix: "+",
+      label: t.stat2Label,
+      sub: t.stat2Sub,
+      accent: "var(--accent2)",
+      progress: 70,
+    },
+    {
+      icon: StatIcons.sparkles,
+      value: 100,
+      suffix: "%",
+      label: lang === "en" ? "AI Focused" : "Enfoque IA",
+      sub: t.stat3Sub,
+      accent: "var(--accent)",
+      progress: 100,
+    },
   ];
 
+  // Values reducidos a 4 principales
   const values = [
-    { icon: "🧠", text: t.val1 },
-    { icon: "🏗️", text: t.val2 },
-    { icon: "🔍", text: t.val3 },
-    { icon: "🚀", text: t.val4 },
-    { icon: "📐", text: t.val5 },
-    { icon: "🤝", text: t.val6 },
-  ];
-
-  const statThemes = [
-    {
-      bg: "color-mix(in srgb, var(--accent3) var(--about-stat-tint), var(--card-bg))",
-      num: "var(--accent3)",
-      shadow: "var(--accent3)",
-    },
-    {
-      bg: "color-mix(in srgb, var(--accent2) var(--about-stat-tint), var(--card-bg))",
-      num: "var(--accent2)",
-      shadow: "var(--accent2)",
-    },
-    {
-      bg: "color-mix(in srgb, var(--accent) var(--about-stat-tint), var(--card-bg))",
-      num: "var(--accent)",
-      shadow: "var(--accent)",
-    },
-  ];
-
-  const valueAccents = [
-    "var(--accent)",
-    "var(--accent3)",
-    "var(--accent2)",
-    "var(--accent)",
-    "var(--accent2)",
-    "var(--accent3)",
+    { icon: "🧠", text: t.val1, accent: "var(--accent)" },
+    { icon: "🚀", text: t.val4, accent: "var(--accent2)" },
+    { icon: "📐", text: t.val5, accent: "var(--accent3)" },
+    { icon: "🤝", text: t.val6, accent: "var(--accent)" },
   ];
 
   return (
     <section
       id="about"
       className="section-shell"
+      ref={sectionRef}
       style={{
         borderTop: "3px solid var(--border)",
       }}
@@ -157,120 +329,112 @@ export default function About({ lang }: { lang: Lang }) {
           initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{
-            duration: 0.7,
-            hover: { duration: 0.12 },
-            tap: { duration: 0.08 },
-          }}
-          style={{ display: "flex", flexDirection: "column", gap: 18 }}
+          transition={{ duration: 0.7 }}
+          style={{ display: "flex", flexDirection: "column", gap: 32 }}
         >
-          {stats.map((s, i) => (
-            <motion.div
-              key={i}
-              className="about-stat"
-              whileHover={{
-                x: -3,
-                y: -3,
-                boxShadow: `9px 9px 0 ${statThemes[i].shadow}`,
-              }}
-              whileTap={{
-                x: 2,
-                y: 2,
-                boxShadow: `2px 2px 0 ${statThemes[i].shadow}`,
-              }}
-              transition={{ duration: 0.12 }}
-              style={{
-                background: statThemes[i].bg,
-                border: "3px solid var(--border)",
-                boxShadow: `5px 5px 0 ${statThemes[i].shadow}`,
-                padding: "22px 26px",
-                display: "flex",
-                alignItems: "center",
-                gap: 20,
-                position: "relative",
-              }}
-            >
-              <div
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  right: 12,
-                  fontSize: 11,
-                  fontWeight: 800,
-                  letterSpacing: "0.1em",
-                  color: "var(--border)",
-                  opacity: 0.5,
-                }}
-              >
-                0{i + 1}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 800,
-                  fontSize: 48,
-                  lineHeight: 1,
-                  color: statThemes[i].num,
-                  flexShrink: 0,
-                }}
-              >
-                {s.num}
-              </div>
-              <div>
-                <div style={{ fontWeight: 800, fontSize: 16, marginBottom: 4 }}>
-                  {s.label}
-                </div>
-                <div style={{ fontSize: 14, color: "var(--text-muted)" }}>
-                  {s.sub}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-
+          {/* Stats minimalistas en fila horizontal */}
           <div
-            className="about-values-grid"
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 12,
-              marginTop: 4,
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 24,
+              padding: "24px 0",
+              borderBottom: "2px solid var(--border)",
+            }}
+          >
+            {stats.map((stat, i) => (
+              <MinimalStat
+                key={i}
+                icon={stat.icon}
+                value={stat.value}
+                suffix={stat.suffix}
+                label={stat.label}
+                accent={stat.accent}
+                delay={i * 150}
+                inView={isInView}
+              />
+            ))}
+          </div>
+
+          {/* Progress bars con descripción */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            {stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 4,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 600,
+                      color: "var(--text)",
+                    }}
+                  >
+                    {stat.sub}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: stat.accent,
+                    }}
+                  >
+                    {stat.progress}%
+                  </span>
+                </div>
+                <AnimatedProgress
+                  value={stat.progress}
+                  color={stat.accent}
+                  delay={i * 100 + 300}
+                  inView={isInView}
+                />
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Values reducidos a chips horizontales */}
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 10,
+              marginTop: 8,
             }}
           >
             {values.map((v, i) => (
               <motion.div
                 key={i}
-                whileHover={{ x: -2, y: -2 }}
-                transition={{ duration: 0.12 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.5 + i * 0.08 }}
+                whileHover={{ y: -2 }}
                 style={{
-                  border: "3px solid var(--border)",
-                  boxShadow: `4px 4px 0 ${valueAccents[i]}`,
-                  background: `color-mix(in srgb, ${valueAccents[i]} var(--about-value-tint), var(--card-bg))`,
-                  padding: "14px 16px",
-                  fontSize: 13,
-                  fontWeight: 700,
                   display: "flex",
                   alignItems: "center",
-                  gap: 10,
+                  gap: 8,
+                  padding: "10px 16px",
+                  background: `color-mix(in srgb, ${v.accent} 12%, transparent)`,
+                  border: `2px solid color-mix(in srgb, ${v.accent} 30%, var(--border))`,
+                  borderRadius: 100,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "var(--text)",
+                  cursor: "default",
                 }}
               >
-                <div
-                  style={{
-                    width: 32,
-                    height: 32,
-                    background: valueAccents[i],
-                    color:
-                      valueAccents[i] === "var(--accent3)"
-                        ? "#08100f"
-                        : "var(--white)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 16,
-                    flexShrink: 0,
-                  }}
-                >
-                  {v.icon}
-                </div>
+                <span style={{ fontSize: 16 }}>{v.icon}</span>
                 {v.text}
               </motion.div>
             ))}

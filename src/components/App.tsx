@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import type { Lang } from "../data/i18n";
 import { useLenis } from "../hooks/useLenis";
+import { RetroModeProvider } from "../contexts/RetroModeContext";
 import Nav from "./Nav";
 import FloatingControls from "./FloatingControls";
 import Hero from "./Hero";
 import Marquee from "./Marquee";
 import About from "./About";
-import Skills from "./Skills";
+import SkillsTerminal from "./SkillsTerminal";
 import Projects from "./Projects";
 import Experience from "./Experience";
 import { Contact, Footer } from "./Sections";
+import { KONAMI_CODE_DISPLAY } from "../hooks/useKonamiCode";
 
 export default function App() {
   const [lang, setLang] = useState<Lang>("es");
@@ -31,7 +33,7 @@ export default function App() {
   };
 
   return (
-    <>
+    <RetroModeProvider>
       <Nav lang={lang} onLangChange={setLang} />
       <FloatingControls
         lang={lang}
@@ -43,12 +45,31 @@ export default function App() {
         <Hero lang={lang} />
         <Marquee />
         <About lang={lang} />
-        <Skills lang={lang} />
+        <SkillsTerminal lang={lang} />
         <Projects lang={lang} />
         <Experience lang={lang} />
         <Contact lang={lang} />
       </main>
       <Footer lang={lang} />
-    </>
+      {/* Pista secreta del Konami code */}
+      <span
+        className="secret-hint"
+        title="Do you know the code?"
+        style={{
+          position: "fixed",
+          bottom: 8,
+          right: 8,
+          fontFamily: "monospace",
+          fontSize: 8,
+          opacity: 0.06,
+          transition: "opacity 0.5s",
+          cursor: "default",
+          userSelect: "none",
+          zIndex: 9999,
+        }}
+      >
+        {KONAMI_CODE_DISPLAY}
+      </span>
+    </RetroModeProvider>
   );
 }

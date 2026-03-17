@@ -45,7 +45,7 @@ export default function ProjectGrid({ projects, lang }: ProjectGridProps) {
             whileTap={{
               x: 2,
               y: 2,
-              boxShadow: "2px 2px 0 var(--accent)",
+              boxShadow: "1px 2px 0 var(--accent)",
               transition: { duration: 0.08 },
             }}
             viewport={{ once: true, margin: "-80px" }}
@@ -145,7 +145,6 @@ export default function ProjectGrid({ projects, lang }: ProjectGridProps) {
                   fontSize: 13,
                   color: "var(--text-muted)",
                   lineHeight: 1.6,
-                  marginBottom: 16,
                 }}
               >
                 {proj.shortDesc[lang]}

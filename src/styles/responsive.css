@@ -91,8 +91,11 @@
 
 @media (max-width: 600px) {
   .section-title {
-    font-size: clamp(30px, 9vw, 38px) !important;
-    line-height: 0.95 !important;
+    font-size: clamp(26px, 7.5vw, 33px) !important;
+    line-height: 1.02 !important;
+    text-wrap: balance;
+    max-width: 14ch;
+    overflow-wrap: anywhere;
     margin-bottom: 34px !important;
   }
 
@@ -131,6 +134,14 @@
   }
 }
 
+@media (max-width: 600px) {
+  .projects-page-section .section-title {
+    font-size: clamp(26px, 8vw, 32px) !important;
+    line-height: 1.02 !important;
+    max-width: 15ch;
+  }
+}
+
 @media (max-width: 420px) {
   html,
   body {
@@ -145,7 +156,10 @@
   }
 
   .hero-name {
-    font-size: clamp(32px, 10.5vw, 44px) !important;
+    font-size: clamp(28px, 9.2vw, 38px) !important;
+    line-height: 0.96 !important;
+    text-wrap: balance;
+    max-width: 11ch;
   }
 
   .hero-tag {
@@ -189,8 +203,9 @@
   }
 
   .hero-name {
-    font-size: clamp(30px, 10vw, 38px) !important;
+    font-size: clamp(26px, 8.8vw, 34px) !important;
     line-height: 0.94 !important;
+    max-width: 10.5ch;
   }
 
   .hero-title {
@@ -398,6 +413,28 @@
   }
   .skills-track-chip {
     box-shadow: 2px 2px 0 var(--border) !important;
+  }
+}
+
+/* Skills Terminal Responsive */
+@media (max-width: 900px) {
+  .skills-terminal-window {
+    overflow-x: auto;
+  }
+  .skills-terminal-window > div:last-child > div > div:last-child {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-terminal-window {
+    overflow-x: auto;
+  }
+  .skills-terminal-window > div:last-child > div > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+  .skills-blobs-container {
+    display: none;
   }
 }
 
@@ -612,12 +649,21 @@
     padding: 0 16px !important;
     gap: 10px !important;
   }
+
+  .contact-title {
+    font-size: clamp(34px, 12vw, 62px) !important;
+    line-height: 0.95 !important;
+  }
 }
 
 @media (max-width: 360px) {
   .marquee-item {
     font-size: 11px !important;
     padding: 0 12px !important;
+  }
+
+  .contact-title {
+    font-size: clamp(30px, 13vw, 48px) !important;
   }
 }
 
@@ -693,6 +739,10 @@
     font-size: 10px !important;
     padding: 2px 8px !important;
   }
+  .project-carousel-shell button {
+    font-size: 10px !important;
+    padding: 6px 10px !important;
+  }
 }
 
 @media (max-width: 600px) {
@@ -735,6 +785,28 @@
   .project-modal-link-btn {
     width: 100% !important;
     justify-content: center !important;
+  }
+  .project-carousel-shell {
+    margin-bottom: 22px !important;
+  }
+  .project-carousel-viewport {
+    box-shadow: 4px 4px 0 var(--border) !important;
+  }
+  .project-carousel-shell button[aria-current] {
+    width: 9px !important;
+    height: 9px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .project-carousel-shell > div:last-child {
+    gap: 8px !important;
+  }
+  .project-carousel-shell > div:last-child > div:first-child {
+    width: 100%;
+  }
+  .project-carousel-shell > div:last-child > div:first-child button {
+    flex: 1;
   }
 }
 

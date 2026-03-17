@@ -1,16 +1,253 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 import type { Lang } from "../data/i18n";
 import { translations } from "../data/i18n";
 
+// Componente de punto que pulsa
+function PulsingDot({
+  accent,
+  isActive,
+}: {
+  accent: string;
+  isActive: boolean;
+}) {
+  return (
+    <span
+      className="experience-dot"
+      style={{ background: accent }}
+      aria-hidden="true"
+    >
+      {isActive && (
+        <motion.span
+          style={{
+            position: "absolute",
+            inset: -4,
+            borderRadius: "50%",
+            border: `2px solid ${accent}`,
+          }}
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.8, 0, 0.8],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      )}
+    </span>
+  );
+}
+
+// Componente de marcador de año
+function YearMarker({ year, isFirst }: { year: string; isFirst?: boolean }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 16,
+        margin: isFirst ? "0 0 24px 0" : "32px 0 24px 0",
+      }}
+    >
+      <div
+        style={{
+          height: 2,
+          flex: 1,
+          background: "color-mix(in srgb, var(--border) 30%, transparent)",
+        }}
+      />
+      <motion.span
+        style={{
+          fontFamily: "var(--font-display)",
+          fontWeight: 800,
+          fontSize: 14,
+          letterSpacing: "0.1em",
+          color: "var(--accent3)",
+          padding: "6px 16px",
+          background: "color-mix(in srgb, var(--accent3) 15%, transparent)",
+          border:
+            "2px solid color-mix(in srgb, var(--accent3) 40%, var(--border))",
+        }}
+        whileHover={{
+          scale: 1.05,
+          background: "color-mix(in srgb, var(--accent3) 25%, transparent)",
+        }}
+        transition={{ duration: 0.2 }}
+      >
+        {year}
+      </motion.span>
+      <div
+        style={{
+          height: 2,
+          flex: 1,
+          background: "color-mix(in srgb, var(--border) 30%, transparent)",
+        }}
+      />
+    </motion.div>
+  );
+}
+
+// Componente de card de experiencia con slide alternado
+function ExperienceCard({
+  exp,
+  index,
+  isInView,
+}: {
+  exp: {
+    period: string;
+    role: string;
+    company: string;
+    mode: string;
+    logo: string;
+    accent: string;
+    desc: string;
+    wins: string[];
+    tags: string[];
+  };
+  index: number;
+  isInView: boolean;
+}) {
+  const isEven = index % 2 === 0;
+
+  return (
+    <motion.article
+      className="experience-item"
+      initial={{
+        opacity: 0,
+        x: isEven ? -40 : 40,
+        y: 20,
+      }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.1,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+      style={{
+        position: "relative",
+      }}
+    >
+      <PulsingDot accent={exp.accent} isActive={isInView && index === 0} />
+      <motion.div
+        className="experience-item-body"
+        style={{
+          borderColor: `color-mix(in srgb, ${exp.accent} 34%, var(--border))`,
+        }}
+        whileHover={{
+          borderColor: `color-mix(in srgb, ${exp.accent} 60%, var(--border))`,
+          transition: { duration: 0.2 },
+        }}
+      >
+        <motion.span
+          className="experience-step"
+          style={{
+            background: exp.accent,
+            color: "#0d0d0d",
+          }}
+          initial={{ scale: 0.8, opacity: 0 }}
+          whileInView={{
+            scale: 1,
+            opacity: 1,
+            boxShadow: `0 0 0 2px #0d0d0d, 0 0 0 6px color-mix(in srgb, ${exp.accent} 42%, transparent)`,
+          }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.3, delay: index * 0.1 + 0.1 }}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </motion.span>
+        <div className="experience-item-head">
+          <div>
+            <p className="experience-period">{exp.period}</p>
+            <div className="experience-role-wrap">
+              <motion.span
+                className="experience-logo"
+                style={{
+                  borderColor: exp.accent,
+                  color: exp.accent,
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  boxShadow: `0 0 12px color-mix(in srgb, ${exp.accent} 50%, transparent)`,
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                {exp.logo}
+              </motion.span>
+              <h3 className="experience-role">{exp.role}</h3>
+            </div>
+          </div>
+          <motion.span
+            className="experience-mode"
+            style={{ background: exp.accent }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.15 }}
+          >
+            {exp.mode}
+          </motion.span>
+        </div>
+        <p className="experience-company">{exp.company}</p>
+        <p className="experience-desc">{exp.desc}</p>
+        <ul className="experience-wins">
+          {exp.wins.map((win, i) => (
+            <motion.li
+              key={win}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: i * 0.05 + index * 0.1 }}
+            >
+              {win}
+            </motion.li>
+          ))}
+        </ul>
+        <div className="experience-tags">
+          {exp.tags.map((tag, i) => (
+            <motion.span
+              key={tag}
+              className="experience-tag"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.2, delay: i * 0.03 + index * 0.1 }}
+              whileHover={{
+                y: -2,
+                transition: { duration: 0.15 },
+              }}
+            >
+              {tag}
+            </motion.span>
+          ))}
+        </div>
+      </motion.div>
+    </motion.article>
+  );
+}
+
 export default function Experience({ lang }: { lang: Lang }) {
   const t = translations[lang].experience;
   const timelineRef = useRef<HTMLDivElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   const { scrollYProgress } = useScroll({
     target: timelineRef,
     offset: ["start 75%", "end 30%"],
   });
-  const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
+  // Spring suavizado para la línea de progreso
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  const lineScale = useTransform(smoothProgress, [0, 1], [0, 1]);
 
   const experiences =
     lang === "en"
@@ -31,21 +268,6 @@ export default function Experience({ lang }: { lang: Lang }) {
             tags: ["Cloud", "Monitoring", "SLA", "Ops"],
           },
           {
-            period: "Apr 2024 — Jun 2024",
-            role: "Full Stack Developer",
-            company: "Freelance · Life Unity",
-            mode: "Freelance",
-            logo: "LU",
-            accent: "#3b82f6",
-            desc: "Built a productivity platform with client-server architecture to help users manage routines and improve nutrition outcomes.",
-            wins: [
-              "Implemented modular tasks and deliverables with SCRUM",
-              "Connected React front end with Django REST backend",
-              "Integrated Firebase, PostgreSQL, and JWT auth flows",
-            ],
-            tags: ["React", "Django", "PostgreSQL", "JWT", "Firebase"],
-          },
-          {
             period: "Sep 2024 — Dec 2024",
             role: "Full Stack Developer",
             company: "Freelance · Alejandra Academia",
@@ -59,6 +281,21 @@ export default function Experience({ lang }: { lang: Lang }) {
               "Led product UX iterations with business goals",
             ],
             tags: ["Next.js", "NestJS", "TypeScript", "MySQL"],
+          },
+          {
+            period: "Apr 2024 — Jun 2024",
+            role: "Full Stack Developer",
+            company: "Freelance · Life Unity",
+            mode: "Freelance",
+            logo: "LU",
+            accent: "#3b82f6",
+            desc: "Built a productivity platform with client-server architecture to help users manage routines and improve nutrition outcomes.",
+            wins: [
+              "Implemented modular tasks and deliverables with SCRUM",
+              "Connected React front end with Django REST backend",
+              "Integrated Firebase, PostgreSQL, and JWT auth flows",
+            ],
+            tags: ["React", "Django", "PostgreSQL", "JWT", "Firebase"],
           },
           {
             period: "Sep 2024",
@@ -93,21 +330,6 @@ export default function Experience({ lang }: { lang: Lang }) {
             tags: ["Cloud", "Monitoreo", "SLA", "Ops"],
           },
           {
-            period: "Abril 2024 — Junio 2024",
-            role: "Full Stack Developer",
-            company: "Freelance · Life Unity",
-            mode: "Freelance",
-            logo: "LU",
-            accent: "#3b82f6",
-            desc: "Desarrollé una plataforma de productividad con arquitectura cliente-servidor para organizar actividades y mejorar hábitos de nutrición.",
-            wins: [
-              "Implementación por tareas y entregables con SCRUM",
-              "Integración React + backend Django REST",
-              "Uso de Firebase, PostgreSQL y JWT en flujo productivo",
-            ],
-            tags: ["React", "Django", "PostgreSQL", "JWT", "Firebase"],
-          },
-          {
             period: "Septiembre 2024 — Diciembre 2024",
             role: "Full Stack Developer",
             company: "Freelance · Alejandra Academia",
@@ -121,6 +343,21 @@ export default function Experience({ lang }: { lang: Lang }) {
               "Iteraciones de UX alineadas a objetivos de negocio",
             ],
             tags: ["Next.js", "NestJS", "TypeScript", "MySQL"],
+          },
+          {
+            period: "Abril 2024 — Junio 2024",
+            role: "Full Stack Developer",
+            company: "Freelance · Life Unity",
+            mode: "Freelance",
+            logo: "LU",
+            accent: "#3b82f6",
+            desc: "Desarrollé una plataforma de productividad con arquitectura cliente-servidor para organizar actividades y mejorar hábitos de nutrición.",
+            wins: [
+              "Implementación por tareas y entregables con SCRUM",
+              "Integración React + backend Django REST",
+              "Uso de Firebase, PostgreSQL y JWT en flujo productivo",
+            ],
+            tags: ["React", "Django", "PostgreSQL", "JWT", "Firebase"],
           },
           {
             period: "Septiembre 2024",
@@ -247,6 +484,7 @@ export default function Experience({ lang }: { lang: Lang }) {
   return (
     <section
       id="experience"
+      ref={sectionRef}
       className="section-shell experience-shell"
       style={{
         borderTop: "3px solid var(--border)",
@@ -278,88 +516,31 @@ export default function Experience({ lang }: { lang: Lang }) {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.6 }}
             >
+              {/* Línea de progreso con gradiente */}
               <motion.span
                 className="experience-line-progress"
-                style={{ scaleY: lineScale }}
+                style={{
+                  scaleY: lineScale,
+                  background: `linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3))`,
+                }}
                 aria-hidden="true"
               />
+
+              {/* Marcador de año inicial */}
+              <YearMarker year="2025" isFirst />
+
+              {/* Experiencias */}
               {experiences.map((exp, i) => (
-                <motion.article
+                <ExperienceCard
                   key={`${exp.role}-${exp.period}`}
-                  className="experience-item"
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
-                >
-                  <span
-                    className="experience-dot"
-                    style={{ background: exp.accent }}
-                    aria-hidden="true"
-                  />
-                  <div
-                    className="experience-item-body"
-                    style={{
-                      borderColor: `color-mix(in srgb, ${exp.accent} 34%, var(--border))`,
-                    }}
-                  >
-                    <motion.span
-                      className="experience-step"
-                      style={{
-                        background: exp.accent,
-                        color: "#0d0d0d",
-                      }}
-                      initial={{ scale: 0.9, opacity: 0.75 }}
-                      whileInView={{
-                        scale: 1,
-                        opacity: 1,
-                        boxShadow: `0 0 0 2px #0d0d0d, 0 0 0 6px color-mix(in srgb, ${exp.accent} 42%, transparent)`,
-                      }}
-                      viewport={{ once: false, amount: 0.7 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </motion.span>
-                    <div className="experience-item-head">
-                      <div>
-                        <p className="experience-period">{exp.period}</p>
-                        <div className="experience-role-wrap">
-                          <span
-                            className="experience-logo"
-                            style={{
-                              borderColor: exp.accent,
-                              color: exp.accent,
-                            }}
-                          >
-                            {exp.logo}
-                          </span>
-                          <h3 className="experience-role">{exp.role}</h3>
-                        </div>
-                      </div>
-                      <span
-                        className="experience-mode"
-                        style={{ background: exp.accent }}
-                      >
-                        {exp.mode}
-                      </span>
-                    </div>
-                    <p className="experience-company">{exp.company}</p>
-                    <p className="experience-desc">{exp.desc}</p>
-                    <ul className="experience-wins">
-                      {exp.wins.map((win) => (
-                        <li key={win}>{win}</li>
-                      ))}
-                    </ul>
-                    <div className="experience-tags">
-                      {exp.tags.map((tag) => (
-                        <span key={tag} className="experience-tag">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.article>
+                  exp={exp}
+                  index={i}
+                  isInView={true}
+                />
               ))}
+
+              {/* Marcador de año anterior */}
+              <YearMarker year="2024" />
             </motion.div>
 
             <motion.div
@@ -373,7 +554,14 @@ export default function Experience({ lang }: { lang: Lang }) {
                 {lang === "en" ? "Education" : "Educacion"}
               </h3>
               {education.map((item, i) => (
-                <article key={item.title} className="journey-entry">
+                <motion.article
+                  key={item.title}
+                  className="journey-entry"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                >
                   <span className="journey-dot" aria-hidden="true" />
                   <div className="journey-entry-body">
                     <motion.span
@@ -398,14 +586,21 @@ export default function Experience({ lang }: { lang: Lang }) {
                     <p className="journey-muted">{item.period}</p>
                     <p className="journey-note">{item.note}</p>
                   </div>
-                </article>
+                </motion.article>
               ))}
 
               <h3 className="journey-heading">
                 {lang === "en" ? "Certifications" : "Certificaciones"}
               </h3>
               {certifications.map((item, i) => (
-                <article key={item.name} className="journey-entry">
+                <motion.article
+                  key={item.name}
+                  className="journey-entry"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.1 }}
+                >
                   <span className="journey-dot" aria-hidden="true" />
                   <div className="journey-entry-body">
                     <motion.span
@@ -429,7 +624,7 @@ export default function Experience({ lang }: { lang: Lang }) {
                     <p>{item.issuer}</p>
                     <p className="journey-muted">{item.period}</p>
                   </div>
-                </article>
+                </motion.article>
               ))}
             </motion.div>
           </div>
@@ -441,12 +636,24 @@ export default function Experience({ lang }: { lang: Lang }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.55 }}
+              whileHover={{
+                y: -4,
+                transition: { duration: 0.2 },
+              }}
             >
               <span className="experience-card-badge">{side.badge}</span>
               <h3>{side.title}</h3>
               <ul>
-                {side.points.map((point) => (
-                  <li key={point}>{point}</li>
+                {side.points.map((point, i) => (
+                  <motion.li
+                    key={point}
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.08 }}
+                  >
+                    {point}
+                  </motion.li>
                 ))}
               </ul>
             </motion.aside>
@@ -457,11 +664,23 @@ export default function Experience({ lang }: { lang: Lang }) {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.55, delay: 0.08 }}
+              whileHover={{
+                y: -4,
+                transition: { duration: 0.2 },
+              }}
             >
               <h4>{side.now}</h4>
               <ul>
-                {side.nowItems.map((item) => (
-                  <li key={item}>{item}</li>
+                {side.nowItems.map((item, i) => (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.05 }}
+                  >
+                    {item}
+                  </motion.li>
                 ))}
               </ul>
             </motion.aside>

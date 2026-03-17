@@ -63,12 +63,16 @@ export function Contact({ lang }: { lang: Lang }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.7 }}
+          className="contact-title"
           style={{
             fontFamily: "var(--font-display)",
             fontWeight: 800,
             fontSize: "clamp(44px,8vw,110px)",
             lineHeight: 0.9,
             marginBottom: 24,
+            overflowWrap: "anywhere",
+            wordBreak: "break-word",
+            hyphens: "auto",
           }}
         >
           {t.title1}

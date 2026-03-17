@@ -1,9 +1,102 @@
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import type { Lang } from "../data/i18n";
 import { translations } from "../data/i18n";
+import { useMousePosition } from "../hooks/useMousePosition";
 
 interface HeroProps {
   lang: Lang;
+}
+
+// Componente de botón magnético
+function MagneticButton({
+  children,
+  href,
+  className,
+  strength = 0.4,
+}: {
+  children: React.ReactNode;
+  href: string;
+  className: string;
+  strength?: number;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const mousePosition = useMousePosition(isHovered);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springConfig = { damping: 15, stiffness: 150 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  useEffect(() => {
+    if (!ref.current || !isHovered) {
+      x.set(0);
+      y.set(0);
+      return;
+    }
+
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const distanceX = mousePosition.x - centerX;
+    const distanceY = mousePosition.y - centerY;
+
+    x.set(distanceX * strength);
+    y.set(distanceY * strength);
+  }, [mousePosition, isHovered, strength, x, y]);
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      style={{ x: springX, y: springY }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.15 }}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
+// Componente de forma SVG con parallax
+function ParallaxShape({
+  children,
+  className,
+  parallaxStrength = 20,
+  viewBox,
+}: {
+  children: React.ReactNode;
+  className: string;
+  parallaxStrength?: number;
+  viewBox?: string;
+}) {
+  const mousePosition = useMousePosition(true);
+
+  const x = useTransform(() => mousePosition.normalizedX * parallaxStrength);
+  const y = useTransform(() => mousePosition.normalizedY * parallaxStrength);
+
+  const springConfig = { damping: 30, stiffness: 100 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  return (
+    <motion.svg
+      className={className}
+      style={{ x: springX, y: springY }}
+      fill="none"
+      viewBox={viewBox}
+    >
+      {children}
+    </motion.svg>
+  );
 }
 
 export default function Hero({ lang }: HeroProps) {
@@ -30,28 +123,33 @@ export default function Hero({ lang }: HeroProps) {
 
   return (
     <section id="hero" className="hero-section">
-      {/* BG Shapes */}
-      <svg
+      {/* BG Shapes con Parallax */}
+      <ParallaxShape
         className="hero-bg-shape s1"
-        style={{ animation: "float 8s ease-in-out infinite" }}
+        parallaxStrength={25}
         viewBox="0 0 200 200"
-        fill="none"
       >
-        <circle
+        <motion.circle
           cx="100"
           cy="100"
           r="80"
           stroke="currentColor"
           strokeWidth="3"
           fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
         />
-        <circle
+        <motion.circle
           cx="100"
           cy="100"
           r="50"
           stroke="currentColor"
           strokeWidth="3"
           fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, delay: 0.2, ease: "easeInOut" }}
         />
         <line
           x1="20"
@@ -69,13 +167,27 @@ export default function Hero({ lang }: HeroProps) {
           stroke="currentColor"
           strokeWidth="3"
         />
-        <circle cx="100" cy="100" r="8" fill="currentColor" />
-      </svg>
-      <svg
+        <motion.circle
+          cx="100"
+          cy="100"
+          r="8"
+          fill="currentColor"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [1, 0.7, 1],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </ParallaxShape>
+
+      <ParallaxShape
         className="hero-bg-shape s2"
-        style={{ animation: "float 10s ease-in-out infinite reverse" }}
+        parallaxStrength={35}
         viewBox="0 0 200 200"
-        fill="none"
       >
         <rect
           x="20"
@@ -111,18 +223,21 @@ export default function Hero({ lang }: HeroProps) {
           stroke="currentColor"
           strokeWidth="2"
         />
-      </svg>
-      <svg
+      </ParallaxShape>
+
+      <ParallaxShape
         className="hero-bg-shape s3"
-        style={{ animation: "spin 20s linear infinite" }}
+        parallaxStrength={15}
         viewBox="0 0 200 200"
-        fill="none"
       >
-        <polygon
+        <motion.polygon
           points="100,10 190,190 10,190"
           stroke="currentColor"
           strokeWidth="3"
           fill="none"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.5, ease: "easeInOut" }}
         />
         <polygon
           points="100,50 160,170 40,170"
@@ -130,71 +245,137 @@ export default function Hero({ lang }: HeroProps) {
           strokeWidth="2"
           fill="none"
         />
-      </svg>
+      </ParallaxShape>
 
       {/* Inner grid — centered at 1200px */}
       <div className="hero-inner">
         {/* LEFT */}
         <div className="hero-left">
           {/* Badge */}
-          <div className="hero-tag slide-in" style={{ animationDelay: "0.1s" }}>
-            <span className="hero-tag-dot" />
+          <motion.div
+            className="hero-tag slide-in"
+            style={{ animationDelay: "0.1s" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <motion.span
+              className="hero-tag-dot"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [1, 0.7, 1],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
             {t.available}
-          </div>
+          </motion.div>
 
           {/* Title */}
           <h1 className="hero-name slide-in" style={{ animationDelay: "0.2s" }}>
-            <span className="glitch" data-text={t.title1}>
+            <motion.span
+              className="glitch"
+              data-text={t.title1}
+              whileHover={{
+                textShadow: [
+                  "2px 0 #ff2d7b, -2px 0 #00e8a2",
+                  "-2px 0 #ff2d7b, 2px 0 #00e8a2",
+                  "2px 0 #ff2d7b, -2px 0 #00e8a2",
+                ],
+              }}
+              transition={{ duration: 0.3 }}
+            >
               {t.title1}
-            </span>
+            </motion.span>
             <br />
-            <span className="name-highlight">{t.title2}</span>
+            <motion.span
+              className="name-highlight"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              {t.title2}
+            </motion.span>
           </h1>
 
           {/* Subtitle */}
-          <p className="hero-title slide-in" style={{ animationDelay: "0.3s" }}>
+          <motion.p
+            className="hero-title slide-in"
+            style={{ animationDelay: "0.3s" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             <strong>{t.subtitle}</strong>
             {" · "}
             <em>{t.subtitleSub}</em>
-          </p>
+          </motion.p>
 
           {/* Description */}
-          <p className="hero-desc slide-in" style={{ animationDelay: "0.4s" }}>
+          <motion.p
+            className="hero-desc slide-in"
+            style={{ animationDelay: "0.4s" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
             {t.desc}
-          </p>
+          </motion.p>
 
-          <ul
+          <motion.ul
             className="hero-signals slide-in"
             style={{ animationDelay: "0.45s" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            {heroSignals.map((signal) => (
-              <li key={signal} className="hero-signal-item">
+            {heroSignals.map((signal, i) => (
+              <motion.li
+                key={signal}
+                className="hero-signal-item"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: 0.5 + i * 0.1 }}
+                whileHover={{ x: 4, transition: { duration: 0.15 } }}
+              >
                 {signal}
-              </li>
+              </motion.li>
             ))}
-          </ul>
+          </motion.ul>
 
-          {/* CTAs */}
-          <div
+          {/* CTAs con efecto magnético */}
+          <motion.div
             className="hero-actions slide-in"
             style={{ animationDelay: "0.5s" }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
           >
-            <a href="#projects" className="btn-primary">
+            <MagneticButton href="#projects" className="btn-primary">
               {t.cta1}
-            </a>
-            <a href="#contact" className="btn-secondary">
+            </MagneticButton>
+            <MagneticButton href="#contact" className="btn-secondary">
               {t.cta2}
-            </a>
-          </div>
+            </MagneticButton>
+          </motion.div>
         </div>
 
         {/* RIGHT — composición X: foto + JSON */}
         <div className="hero-right">
-          <div
+          <motion.div
             className="hero-x-stack slide-in"
             style={{ animationDelay: "0.3s" }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div className="hero-x-card hero-json-card" aria-hidden="true">
+            <motion.div
+              className="hero-x-card hero-json-card"
+              aria-hidden="true"
+            >
               <div className="hero-json-window">
                 <div className="hero-json-topbar">
                   <span className="hero-dot red" />
@@ -204,14 +385,22 @@ export default function Hero({ lang }: HeroProps) {
                 </div>
                 <pre className="hero-json-code">{profileJson}</pre>
                 <div className="hero-json-palette" aria-label="Favorite colors">
-                  {favoriteColors.map((color) => (
-                    <span key={color} className="hero-json-palette-item">
-                      <span
+                  {favoriteColors.map((color, i) => (
+                    <motion.span
+                      key={color}
+                      className="hero-json-palette-item"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8 + i * 0.1 }}
+                    >
+                      <motion.span
                         className="hero-color-swatch"
                         style={{ background: color }}
+                        whileHover={{ scale: 1.2, rotate: 10 }}
+                        transition={{ duration: 0.15 }}
                       />
                       {color}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
                 <span className="hero-json-sticker hero-json-sticker-top">
@@ -221,9 +410,9 @@ export default function Hero({ lang }: HeroProps) {
                   Full-Stack
                 </span>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="hero-x-card hero-photo-card">
+            <motion.div className="hero-x-card hero-photo-card">
               <div className="hero-photo-wrap">
                 <div className="hero-profile-frame" />
                 <div className="hero-profile-img">
@@ -243,14 +432,17 @@ export default function Hero({ lang }: HeroProps) {
                 </div>
                 <div className="hero-profile-tag">LENA</div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
         {/* Scroll indicator */}
-        <div
+        <motion.div
           className="hero-scroll slide-in"
           style={{ animationDelay: "0.8s" }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
         >
           <motion.svg
             width="18"
@@ -269,7 +461,7 @@ export default function Hero({ lang }: HeroProps) {
             />
           </motion.svg>
           {t.scroll}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
