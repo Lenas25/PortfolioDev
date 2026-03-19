@@ -440,237 +440,242 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
 
         <div className="project-modal-content" style={{ padding: "32px" }}>
           {/* Gallery Carousel */}
-          <div style={{ marginBottom: 28 }}>
-            <div
-              style={{
-                border: "3px solid var(--border)",
-                background: "#12141d",
-                boxShadow: `7px 7px 0 color-mix(in srgb, ${project.color} 74%, var(--border))`,
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              {/* Slides Container - Using CSS transform instead of framer-motion for reliability */}
+          {gallerySlides.length > 0 && (
+            <div style={{ marginBottom: 28 }}>
               <div
                 style={{
-                  display: "flex",
-                  transform: `translateX(-${activeSlide * 100}%)`,
-                  transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  border: "3px solid var(--border)",
+                  background: "#12141d",
+                  boxShadow: `7px 7px 0 color-mix(in srgb, ${project.color} 74%, var(--border))`,
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                {gallerySlides.map((slide, index) => (
-                  <figure
-                    key={`${project.id}-slide-${index}`}
-                    style={{
-                      minWidth: "100%",
-                      margin: 0,
-                      position: "relative",
-                      aspectRatio: "16 / 9",
-                      background: "#12141d",
-                    }}
-                  >
-                    {failedImages.has(slide.src) ? (
-                      <div
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: `linear-gradient(135deg,
-                            color-mix(in srgb, ${project.color} 20%, #12141d),
-                            color-mix(in srgb, var(--accent2) 15%, #12141d)
-                          )`,
-                          flexDirection: "column",
-                          gap: 12,
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontFamily: "var(--font-display)",
-                            fontWeight: 800,
-                            fontSize: "clamp(24px, 4vw, 42px)",
-                            color: "var(--accent)",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.08em",
-                            border: "3px solid var(--border)",
-                            padding: "12px 24px",
-                            background: "color-mix(in srgb, var(--card-bg) 80%, transparent)",
-                            boxShadow: "6px 6px 0 var(--border)",
-                          }}
-                        >
-                          {project.title[lang].split("—")[0].trim()}
-                        </div>
-                        <div
-                          style={{
-                            fontFamily: "var(--font-body)",
-                            fontWeight: 700,
-                            fontSize: 12,
-                            color: "var(--text-muted)",
-                            letterSpacing: "0.1em",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          {slide.caption}
-                        </div>
-                      </div>
-                    ) : (
-                      <img
-                        src={slide.src}
-                        alt={slide.alt}
-                        loading="eager"
-                        onError={() => handleImageError(slide.src)}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          display: "block",
-                          objectFit: "cover",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    )}
-                    <figcaption
+                {/* Slides Container - Using CSS transform instead of framer-motion for reliability */}
+                <div
+                  style={{
+                    display: "flex",
+                    transform: `translateX(-${activeSlide * 100}%)`,
+                    transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                >
+                  {gallerySlides.map((slide, index) => (
+                    <figure
+                      key={`${project.id}-slide-${index}`}
                       style={{
-                        position: "absolute",
-                        left: 12,
-                        bottom: 12,
-                        fontFamily: "var(--font-body)",
-                        fontWeight: 800,
-                        fontSize: 11,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        color: "#080a12",
-                        background: "var(--accent3)",
-                        border: "2px solid var(--border)",
-                        boxShadow: "4px 4px 0 var(--border)",
-                        padding: "4px 10px",
+                        minWidth: "100%",
+                        margin: 0,
+                        position: "relative",
+                        aspectRatio: "16 / 9",
+                        background: "#12141d",
                       }}
                     >
-                      {slide.caption}
-                    </figcaption>
-                  </figure>
-                ))}
+                      {failedImages.has(slide.src) ? (
+                        <div
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            background: `linear-gradient(135deg,
+                              color-mix(in srgb, ${project.color} 20%, #12141d),
+                              color-mix(in srgb, var(--accent2) 15%, #12141d)
+                            )`,
+                            flexDirection: "column",
+                            gap: 12,
+                          }}
+                        >
+                          <div
+                            style={{
+                              fontFamily: "var(--font-display)",
+                              fontWeight: 800,
+                              fontSize: "clamp(24px, 4vw, 42px)",
+                              color: "var(--accent)",
+                              textTransform: "uppercase",
+                              letterSpacing: "0.08em",
+                              border: "3px solid var(--border)",
+                              padding: "12px 24px",
+                              background:
+                                "color-mix(in srgb, var(--card-bg) 80%, transparent)",
+                              boxShadow: "6px 6px 0 var(--border)",
+                            }}
+                          >
+                            {project.title[lang].split("—")[0].trim()}
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: "var(--font-body)",
+                              fontWeight: 700,
+                              fontSize: 12,
+                              color: "var(--text-muted)",
+                              letterSpacing: "0.1em",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {slide.caption}
+                          </div>
+                        </div>
+                      ) : (
+                        <img
+                          src={slide.src}
+                          alt={slide.alt}
+                          loading="eager"
+                          onError={() => handleImageError(slide.src)}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            display: "block",
+                            objectFit: "cover",
+                            pointerEvents: "none",
+                          }}
+                        />
+                      )}
+                      <figcaption
+                        style={{
+                          position: "absolute",
+                          left: 12,
+                          bottom: 12,
+                          fontFamily: "var(--font-body)",
+                          fontWeight: 800,
+                          fontSize: 11,
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          color: "#080a12",
+                          background: "var(--accent3)",
+                          border: "2px solid var(--border)",
+                          boxShadow: "4px 4px 0 var(--border)",
+                          padding: "4px 10px",
+                        }}
+                      >
+                        {slide.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+
+                {/* Previous Button */}
+                {gallerySlides.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveSlide((prev) =>
+                        prev === 0 ? gallerySlides.length - 1 : prev - 1,
+                      )
+                    }
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: 12,
+                      transform: "translateY(-50%)",
+                      background: "var(--bg)",
+                      border: "2px solid var(--border)",
+                      color: "var(--text)",
+                      fontSize: 20,
+                      fontWeight: 800,
+                      width: 36,
+                      height: 36,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      boxShadow: "3px 3px 0 var(--border)",
+                      zIndex: 5,
+                      borderRadius: 4,
+                    }}
+                    aria-label={ui.previous}
+                  >
+                    ‹
+                  </button>
+                )}
+
+                {/* Next Button */}
+                {gallerySlides.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveSlide(
+                        (prev) => (prev + 1) % gallerySlides.length,
+                      )
+                    }
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      right: 12,
+                      transform: "translateY(-50%)",
+                      background: "var(--accent)",
+                      border: "2px solid var(--border)",
+                      color: "#fff",
+                      fontSize: 20,
+                      fontWeight: 800,
+                      width: 36,
+                      height: 36,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                      boxShadow: "3px 3px 0 var(--border)",
+                      zIndex: 5,
+                      borderRadius: 4,
+                    }}
+                    aria-label={ui.next}
+                  >
+                    ›
+                  </button>
+                )}
               </div>
 
-              {/* Previous Button */}
-              {gallerySlides.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setActiveSlide((prev) =>
-                      prev === 0 ? gallerySlides.length - 1 : prev - 1,
-                    )
-                  }
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: 12,
-                    transform: "translateY(-50%)",
-                    background: "var(--bg)",
-                    border: "2px solid var(--border)",
-                    color: "var(--text)",
-                    fontSize: 20,
-                    fontWeight: 800,
-                    width: 36,
-                    height: 36,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    boxShadow: "3px 3px 0 var(--border)",
-                    zIndex: 5,
-                    borderRadius: 4,
-                  }}
-                  aria-label={ui.previous}
-                >
-                  ‹
-                </button>
-              )}
-
-              {/* Next Button */}
-              {gallerySlides.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() =>
-                    setActiveSlide((prev) => (prev + 1) % gallerySlides.length)
-                  }
-                  style={{
-                    position: "absolute",
-                    top: "50%",
-                    right: 12,
-                    transform: "translateY(-50%)",
-                    background: "var(--accent)",
-                    border: "2px solid var(--border)",
-                    color: "#fff",
-                    fontSize: 20,
-                    fontWeight: 800,
-                    width: 36,
-                    height: 36,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                    boxShadow: "3px 3px 0 var(--border)",
-                    zIndex: 5,
-                    borderRadius: 4,
-                  }}
-                  aria-label={ui.next}
-                >
-                  ›
-                </button>
-              )}
-            </div>
-
-            {/* Controls: Dots + Slide counter */}
-            <div
-              style={{
-                marginTop: 12,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                gap: 12,
-                flexWrap: "wrap",
-              }}
-            >
-              {/* Slide counter */}
-              <span
+              {/* Controls: Dots + Slide counter */}
+              <div
                 style={{
-                  fontFamily: "var(--font-body)",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  color: "var(--text-muted)",
-                  letterSpacing: "0.05em",
+                  marginTop: 12,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: 12,
+                  flexWrap: "wrap",
                 }}
               >
-                {activeSlide + 1} / {gallerySlides.length}
-              </span>
+                {/* Slide counter */}
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 700,
+                    fontSize: 11,
+                    color: "var(--text-muted)",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  {activeSlide + 1} / {gallerySlides.length}
+                </span>
 
-              {/* Dots */}
-              <div style={{ display: "flex", gap: 7, alignItems: "center" }}>
-                {gallerySlides.map((_, index) => (
-                  <button
-                    key={`dot-${index}`}
-                    type="button"
-                    onClick={() => setActiveSlide(index)}
-                    aria-label={`Go to slide ${index + 1}`}
-                    aria-current={activeSlide === index}
-                    style={{
-                      width: 10,
-                      height: 10,
-                      border: "2px solid var(--border)",
-                      background:
-                        activeSlide === index
-                          ? accentCycle[index % accentCycle.length]
-                          : "var(--card-bg)",
-                      padding: 0,
-                      cursor: "pointer",
-                      transition: "transform 0.15s ease",
-                    }}
-                  />
-                ))}
+                {/* Dots */}
+                <div style={{ display: "flex", gap: 7, alignItems: "center" }}>
+                  {gallerySlides.map((_, index) => (
+                    <button
+                      key={`dot-${index}`}
+                      type="button"
+                      onClick={() => setActiveSlide(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                      aria-current={activeSlide === index}
+                      style={{
+                        width: 10,
+                        height: 10,
+                        border: "2px solid var(--border)",
+                        background:
+                          activeSlide === index
+                            ? accentCycle[index % accentCycle.length]
+                            : "var(--card-bg)",
+                        padding: 0,
+                        cursor: "pointer",
+                        transition: "transform 0.15s ease",
+                      }}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div
             style={{

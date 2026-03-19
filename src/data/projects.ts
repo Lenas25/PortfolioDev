@@ -62,7 +62,9 @@ export const projects: Project[] = [
     },
     stack: ["Laravel", "Angular", "TypeScript", "MySQL"],
     category: ["Mining", "IoT", "Web App"],
-    links: {},
+    links: {
+      demo: "https://web-dev.lubecontrol.net/",
+    },
     svgShape: `<rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="2" opacity="0.3"/>
       <circle cx="50" cy="50" r="18" stroke="currentColor" stroke-width="2" opacity="0.4"/>
       <rect x="40" y="40" width="20" height="20" fill="currentColor" opacity="0.5"/>`,
@@ -148,7 +150,7 @@ export const projects: Project[] = [
   },
   {
     id: "kintsumind",
-    num: "02",
+    num: "03",
     status: "freelance",
     title: {
       en: "KintsuMind — Therapy Practice Manager",
@@ -225,7 +227,7 @@ export const projects: Project[] = [
   },
   {
     id: "qhali",
-    num: "03",
+    num: "07",
     status: "live",
     title: {
       en: "Qhali — Holistic Health App",
@@ -294,7 +296,7 @@ export const projects: Project[] = [
   },
   {
     id: "agrolens",
-    num: "04",
+    num: "06",
     status: "live",
     title: {
       en: "AgroLens — Disease Prediction App",
@@ -345,7 +347,7 @@ export const projects: Project[] = [
   },
   {
     id: "alejandra-academia",
-    num: "05",
+    num: "03",
     status: "freelance",
     title: {
       en: "Alejandra Academia — Spa Management",
@@ -424,7 +426,7 @@ export const projects: Project[] = [
   },
   {
     id: "grown-home",
-    num: "06",
+    num: "05",
     status: "freelance",
     title: {
       en: "Grown Home — Entrepreneurship Marketplace",
@@ -507,7 +509,7 @@ export const projects: Project[] = [
   },
   {
     id: "decor-master-clean",
-    num: "07",
+    num: "04s",
     status: "freelance",
     title: {
       en: "Decor Master Clean — Landing Page",
