@@ -23,6 +23,52 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "lubecontrol-refactor",
+    num: "02",
+    status: "freelance",
+    title: {
+      en: "LubeControl — Refactor & Visual Upgrade",
+      es: "LubeControl — Refactorización y Mejora Visual",
+    },
+    shortDesc: {
+      en: "Major refactor and UI redesign for user and admin pages of LubeControl, a mining sensor management app. Improved cycle tracking, failure reporting, and historical records. Backend in Laravel, frontend in Angular.",
+      es: "Refactorización y rediseño visual de las páginas de usuario y administrador de LubeControl, aplicativo para gestión de sensores de minas. Mejoras en ciclos, envío de fallas y registro histórico. Backend Laravel, frontend Angular.",
+    },
+    fullDesc: {
+      en: "LubeControl is a specialized application for managing mining sensors, tracking operational cycles, sending failure alerts, and maintaining historical logs. The project involved a deep refactor of the codebase and a complete visual redesign for both user and admin interfaces, focusing on usability and clarity. New features include improved cycle visualization, streamlined failure reporting, and enhanced historical data access. Backend built with Laravel for robust API and data management, frontend with Angular for responsive and modern UI.",
+      es: "LubeControl es un aplicativo especializado en gestión de sensores de minas, seguimiento de ciclos operativos, envío de alertas de fallas y registro histórico. El proyecto incluyó una refactorización profunda del código y un rediseño visual completo de las interfaces de usuario y administrador, priorizando usabilidad y claridad. Nuevas features: visualización mejorada de ciclos, reporte de fallas optimizado y acceso avanzado a datos históricos. Backend Laravel para API robusta y gestión de datos, frontend Angular para UI moderna y responsiva.",
+    },
+    highlights: {
+      en: [
+        "Complete refactor of user/admin pages",
+        "Modern UI redesign for clarity and usability",
+        "Cycle tracking and visualization improvements",
+        "Streamlined failure reporting workflow",
+        "Enhanced historical records access",
+        "Backend API with Laravel",
+        "Frontend built in Angular",
+        "Used in mining sensor management operations",
+      ],
+      es: [
+        "Refactorización total de páginas de usuario/administrador",
+        "Rediseño visual moderno para claridad y usabilidad",
+        "Mejoras en seguimiento y visualización de ciclos",
+        "Flujo optimizado de reporte de fallas",
+        "Acceso avanzado a registros históricos",
+        "API backend con Laravel",
+        "Frontend construido en Angular",
+        "Usado en operaciones de gestión de sensores de minas",
+      ],
+    },
+    stack: ["Laravel", "Angular", "TypeScript", "MySQL"],
+    category: ["Mining", "IoT", "Web App"],
+    links: {},
+    svgShape: `<rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+      <circle cx="50" cy="50" r="18" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+      <rect x="40" y="40" width="20" height="20" fill="currentColor" opacity="0.5"/>`,
+    color: "#2D7BFF",
+  },
+  {
     id: "inverzy",
     num: "01",
     status: "freelance",
@@ -217,7 +263,7 @@ export const projects: Project[] = [
     },
     stack: ["Flutter", "Dart", "Firebase", "PostgreSQL"],
     category: ["Mobile", "Healthcare"],
-    links: { github: "https://github.com/Lenas25/Qhali", demo: "Proximamente" },
+    links: { github: "https://github.com/Lenas25/Qhali" },
     gallery: [
       {
         src: "/projects/qhali/dashboard.png",
@@ -291,7 +337,6 @@ export const projects: Project[] = [
     category: ["Mobile", "AI/ML", "Agriculture"],
     links: {
       github: "https://github.com/Lenas25/AgroLens",
-      demo: "Proximamente",
     },
     svgShape: `<circle cx="65" cy="65" r="55" stroke="currentColor" stroke-width="2" opacity="0.2"/>
       <path d="M20 65 Q65 10 110 65 Q65 120 20 65" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
