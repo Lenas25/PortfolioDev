@@ -23,52 +23,155 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "lubecontrol-refactor",
-    num: "02",
+    id: "alejandra-academia",
+    num: "03",
     status: "freelance",
     title: {
-      en: "LubeControl — Refactor & Visual Upgrade",
-      es: "LubeControl — Refactorización y Mejora Visual",
+      en: "Alejandra Academia — Spa Management",
+      es: "Alejandra Academia — Gestión de Spa",
     },
     shortDesc: {
-      en: "Major refactor and UI redesign for user and admin pages of LubeControl, a mining sensor management app. Improved cycle tracking, failure reporting, and historical records. Backend in Laravel, frontend in Angular.",
-      es: "Refactorización y rediseño visual de las páginas de usuario y administrador de LubeControl, aplicativo para gestión de sensores de minas. Mejoras en ciclos, envío de fallas y registro histórico. Backend Laravel, frontend Angular.",
+      en: "Complete academic management system for a spa academy. Course management, student dashboard, admin panel with landing page generator, grades, sessions, and CSV/PDF reporting.",
+      es: "Sistema completo de gestión académica para academia de spa. Gestión de cursos, panel de estudiantes, panel de administrador con generador de landing page, calificaciones, sesiones y reportes CSV/PDF.",
     },
     fullDesc: {
-      en: "LubeControl is a specialized application for managing mining sensors, tracking operational cycles, sending failure alerts, and maintaining historical logs. The project involved a deep refactor of the codebase and a complete visual redesign for both user and admin interfaces, focusing on usability and clarity. New features include improved cycle visualization, streamlined failure reporting, and enhanced historical data access. Backend built with Laravel for robust API and data management, frontend with Angular for responsive and modern UI.",
-      es: "LubeControl es un aplicativo especializado en gestión de sensores de minas, seguimiento de ciclos operativos, envío de alertas de fallas y registro histórico. El proyecto incluyó una refactorización profunda del código y un rediseño visual completo de las interfaces de usuario y administrador, priorizando usabilidad y claridad. Nuevas features: visualización mejorada de ciclos, reporte de fallas optimizado y acceso avanzado a datos históricos. Backend Laravel para API robusta y gestión de datos, frontend Angular para UI moderna y responsiva.",
+      en: "Alejandra Academia is a comprehensive management system for a spa academy built with Next.js and NestJS. Features include course management with landing pages generated from the admin panel to showcase services, student dashboard for tracking progress, admin panel for managing all operations, automatic grade calculation and student rankings, session tracking and scheduling, and comprehensive data export (CSV and PDF) of student records. The system also includes an analytics dashboard with visual charts and metrics. Built on a similar architecture to an undergraduate/postgraduate academy system with automatic computation of grades, rankings, session management, and import/export capabilities. Deployed on Vercel and Railway.",
+      es: "Alejandra Academia es un sistema de gestión completo para una academia de spa construido con Next.js y NestJS. Incluye gestión de cursos con landing pages generadas desde el panel del administrador para mostrar servicios, panel de estudiantes para seguimiento de progreso, panel de administrador para gestionar todas las operaciones, cálculo automático de calificaciones y rankings de estudiantes, gestión y programación de sesiones, y exportación completa de datos (CSV y PDF) de registros de estudiantes. También incluye dashboard de analítica con gráficos y métricas visuales. Construido con arquitectura similar a un sistema de academia de pregrado/postgrado con cálculo automático de notas, rankings, gestión de sesiones e importación/exportación. Desplegado en Vercel y Railway.",
     },
     highlights: {
       en: [
-        "Complete refactor of user/admin pages",
-        "Modern UI redesign for clarity and usability",
-        "Cycle tracking and visualization improvements",
-        "Streamlined failure reporting workflow",
-        "Enhanced historical records access",
-        "Backend API with Laravel",
-        "Frontend built in Angular",
-        "Used in mining sensor management operations",
+        "Course management with dynamic landing page generation",
+        "Admin panel to showcase services and manage courses",
+        "Student dashboard with progress tracking",
+        "Automatic grade calculation and student ranking system",
+        "Session management and scheduling",
+        "CSV and PDF export of complete student records",
+        "Analytics dashboard with visual charts and metrics",
+        "Deployed on Vercel (frontend) and Railway (backend)",
       ],
       es: [
-        "Refactorización total de páginas de usuario/administrador",
-        "Rediseño visual moderno para claridad y usabilidad",
-        "Mejoras en seguimiento y visualización de ciclos",
-        "Flujo optimizado de reporte de fallas",
-        "Acceso avanzado a registros históricos",
-        "API backend con Laravel",
-        "Frontend construido en Angular",
-        "Usado en operaciones de gestión de sensores de minas",
+        "Gestión de cursos con generación dinámica de landing pages",
+        "Panel de administrador para mostrar servicios y gestionar cursos",
+        "Dashboard de estudiantes con seguimiento de progreso",
+        "Cálculo automático de calificaciones y sistema de rankings",
+        "Gestión y programación de sesiones",
+        "Exportación en CSV y PDF de registros completos de estudiantes",
+        "Dashboard de analítica con gráficos y métricas visuales",
+        "Desplegado en Vercel (frontend) y Railway (backend)",
       ],
     },
-    stack: ["Laravel", "Angular", "TypeScript", "MySQL"],
-    category: ["Mining", "IoT", "Web App"],
-    links: {
-      demo: "https://web-dev.lubecontrol.net/",
+    stack: [
+      "Next.js",
+      "NestJS",
+      "PostgreSQL",
+      "Vercel",
+      "Railway",
+      "Tailwind CSS",
+      "TypeScript",
+    ],
+    category: ["Education", "SaaS", "Web App"],
+    links: { demo: "https://alejandracademia.com/" },
+    gallery: [
+      {
+        src: "/projects/alejandra-academia/landing.png",
+        alt: {
+          en: "Alejandra Academia Course Landing Page",
+          es: "Landing Page de Curso de Alejandra Academia",
+        },
+        caption: {
+          en: "Dynamic landing page generated from admin panel",
+          es: "Landing page dinámica generada desde el panel del administrador",
+        },
+      },
+      {
+        src: "/projects/alejandra-academia/dashboard.png",
+        alt: {
+          en: "Alejandra Academia Admin Dashboard",
+          es: "Dashboard de Administrador de Alejandra Academia",
+        },
+        caption: {
+          en: "Admin dashboard with course management and analytics",
+          es: "Dashboard de administrador con gestión de cursos y analítica",
+        },
+      },
+    ],
+    svgShape: `<line x1="10" y1="90" x2="30" y2="40" stroke="currentColor" stroke-width="3" opacity="0.4"/>
+      <line x1="30" y1="40" x2="50" y2="65" stroke="currentColor" stroke-width="3" opacity="0.4"/>
+      <line x1="50" y1="65" x2="70" y2="25" stroke="currentColor" stroke-width="3" opacity="0.4"/>
+      <line x1="70" y1="25" x2="90" y2="50" stroke="currentColor" stroke-width="3" opacity="0.4"/>`,
+    color: "#8B003B",
+  },
+  {
+    id: "decor-master-clean",
+    num: "04s",
+    status: "freelance",
+    title: {
+      en: "Decor Master Clean — Landing Page",
+      es: "Decor Master Clean — Landing Page",
     },
-    svgShape: `<rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="2" opacity="0.3"/>
-      <circle cx="50" cy="50" r="18" stroke="currentColor" stroke-width="2" opacity="0.4"/>
-      <rect x="40" y="40" width="20" height="20" fill="currentColor" opacity="0.5"/>`,
-    color: "#2D7BFF",
+    shortDesc: {
+      en: "Custom landing page for cleaning services with conversion optimization. 65% sales increase achieved. Google Analytics, social media integration, and lead capture via email/WhatsApp.",
+      es: "Landing page personalizada para servicios de limpieza con optimización de conversión. 65% de aumento en ventas. Google Analytics, integración de redes sociales y captura de leads por email/WhatsApp.",
+    },
+    fullDesc: {
+      en: "Decor Clean Home is a fully custom landing page designed in Figma and built with Framer for a cleaning services business. The project achieved a 65% increase in sales compared to their previous non-digital presence. Features include fully personalized design optimized for conversion, Google Analytics integration for tracking visitor behavior and conversion metrics, social media link assignments, email and WhatsApp lead capture forms, call-to-action optimization, and seamless integration for customer acquisition. The page focuses on service showcase, testimonials, and streamlined contact options.",
+      es: "Decor Clean Home es una landing page totalmente personalizada diseñada en Figma y construida con Framer para un negocio de servicios de limpieza. El proyecto logró un aumento del 65% en ventas comparado con su ausencia digital anterior. Incluye diseño completamente personalizado optimizado para conversión, integración de Google Analytics para rastrear comportamiento de visitantes y métricas de conversión, asignación de enlaces de redes sociales, formularios de captura de leads por email y WhatsApp, optimización de llamadas a la acción, e integración fluida para adquisición de clientes. La página se enfoca en mostrar servicios, testimonios y opciones de contacto simplificadas.",
+    },
+    highlights: {
+      en: [
+        "Fully custom design created in Figma",
+        "Built with Framer for smooth interactions",
+        "65% sales increase from digital launch",
+        "Google Analytics integration for conversion tracking",
+        "Social media link assignments and CTAs",
+        "Email and WhatsApp lead capture forms",
+        "Optimized for mobile and desktop",
+        "Service showcase with testimonials and reviews",
+      ],
+      es: [
+        "Diseño completamente personalizado en Figma",
+        "Construido con Framer para interacciones suaves",
+        "+65% de aumento en ventas desde lanzamiento digital",
+        "Integración de Google Analytics para seguimiento de conversiones",
+        "Asignación de enlaces de redes sociales y CTAs",
+        "Formularios de captura de leads por email y WhatsApp",
+        "Optimizado para móvil y escritorio",
+        "Muestra de servicios con testimonios y reseñas",
+      ],
+    },
+    stack: ["Framer", "Figma", "Google Analytics", "HTML/CSS"],
+    category: ["Landing Page", "Web Design", "Conversions"],
+    links: { demo: "https://www.decormasterclean.com/" },
+    gallery: [
+      {
+        src: "/projects/decor-master-clean/landing.png",
+        alt: {
+          en: "Decor Master Clean Landing Page",
+          es: "Landing Page de Decor Master Clean",
+        },
+        caption: {
+          en: "Custom landing page design optimized for conversion",
+          es: "Diseño de landing page personalizada optimizada para conversión",
+        },
+      },
+      {
+        src: "/projects/decor-master-clean/email.png",
+        alt: {
+          en: "Decor Master Clean Lead Capture Form",
+          es: "Formulario de Captura de Leads de Decor Master Clean",
+        },
+        caption: {
+          en: "Email and WhatsApp lead capture forms integrated with Google Analytics",
+          es: "Formularios de captura de leads por email y WhatsApp integrados con Google Analytics",
+        },
+      },
+    ],
+
+    svgShape: `<rect x="15" y="15" width="70" height="70" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+      <path d="M35 50 Q50 35 65 50" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
+      <circle cx="30" cy="30" r="3" fill="currentColor" opacity="0.5"/>
+      <circle cx="70" cy="30" r="3" fill="currentColor" opacity="0.5"/>`,
+    color: "#C41E5B",
   },
   {
     id: "inverzy",
@@ -149,6 +252,54 @@ export const projects: Project[] = [
     color: "#C41E5B",
   },
   {
+    id: "lubecontrol-refactor",
+    num: "02",
+    status: "freelance",
+    title: {
+      en: "LubeControl — Refactor & Visual Upgrade",
+      es: "LubeControl — Refactorización y Mejora Visual",
+    },
+    shortDesc: {
+      en: "Major refactor and UI redesign for user and admin pages of LubeControl, a mining sensor management app. Improved cycle tracking, failure reporting, and historical records. Backend in Laravel, frontend in Angular.",
+      es: "Refactorización y rediseño visual de las páginas de usuario y administrador de LubeControl, aplicativo para gestión de sensores de minas. Mejoras en ciclos, envío de fallas y registro histórico. Backend Laravel, frontend Angular.",
+    },
+    fullDesc: {
+      en: "LubeControl is a specialized application for managing mining sensors, tracking operational cycles, sending failure alerts, and maintaining historical logs. The project involved a deep refactor of the codebase and a complete visual redesign for both user and admin interfaces, focusing on usability and clarity. New features include improved cycle visualization, streamlined failure reporting, and enhanced historical data access. Backend built with Laravel for robust API and data management, frontend with Angular for responsive and modern UI.",
+      es: "LubeControl es un aplicativo especializado en gestión de sensores de minas, seguimiento de ciclos operativos, envío de alertas de fallas y registro histórico. El proyecto incluyó una refactorización profunda del código y un rediseño visual completo de las interfaces de usuario y administrador, priorizando usabilidad y claridad. Nuevas features: visualización mejorada de ciclos, reporte de fallas optimizado y acceso avanzado a datos históricos. Backend Laravel para API robusta y gestión de datos, frontend Angular para UI moderna y responsiva.",
+    },
+    highlights: {
+      en: [
+        "Complete refactor of user/admin pages",
+        "Modern UI redesign for clarity and usability",
+        "Cycle tracking and visualization improvements",
+        "Streamlined failure reporting workflow",
+        "Enhanced historical records access",
+        "Backend API with Laravel",
+        "Frontend built in Angular",
+        "Used in mining sensor management operations",
+      ],
+      es: [
+        "Refactorización total de páginas de usuario/administrador",
+        "Rediseño visual moderno para claridad y usabilidad",
+        "Mejoras en seguimiento y visualización de ciclos",
+        "Flujo optimizado de reporte de fallas",
+        "Acceso avanzado a registros históricos",
+        "API backend con Laravel",
+        "Frontend construido en Angular",
+        "Usado en operaciones de gestión de sensores de minas",
+      ],
+    },
+    stack: ["Laravel", "Angular", "TypeScript", "MySQL"],
+    category: ["Mining", "IoT", "Web App"],
+    links: {
+      demo: "https://web-dev.lubecontrol.net/",
+    },
+    svgShape: `<rect x="20" y="20" width="60" height="60" stroke="currentColor" stroke-width="2" opacity="0.3"/>
+      <circle cx="50" cy="50" r="18" stroke="currentColor" stroke-width="2" opacity="0.4"/>
+      <rect x="40" y="40" width="20" height="20" fill="currentColor" opacity="0.5"/>`,
+    color: "#2D7BFF",
+  },
+  {
     id: "kintsumind",
     num: "03",
     status: "freelance",
@@ -226,6 +377,57 @@ export const projects: Project[] = [
     color: "#8B003B",
   },
   {
+    id: "agrolens",
+    num: "06",
+    status: "live",
+    title: {
+      en: "AgroLens — Disease Prediction App",
+      es: "AgroLens — App de Predicción de Enfermedades",
+    },
+    shortDesc: {
+      en: "Flutter mobile app using computer vision to detect diseases in mango crops, built for small farmers in Casma, Peru. Offline-first with ML on-device.",
+      es: "App móvil Flutter con visión computacional para detectar enfermedades en cultivos de mango, para agricultores de Casma, Perú. Offline-first con ML en dispositivo.",
+    },
+    fullDesc: {
+      en: "MangoAI is a Flutter mobile application built for small and medium mango farmers in Casma, Peru. Users can photograph mango leaves or fruits and the app detects diseases in real-time using a TensorFlow Lite model running entirely on-device — no internet required. The app also provides treatment recommendations, disease history, crop management tips, and connects farmers to agronomy resources. Designed for low-end Android devices with minimal data usage.",
+      es: "MangoAI es una aplicación Flutter para agricultores medianos de mango en Casma, Perú. Los usuarios fotografían hojas o frutos y la app detecta enfermedades en tiempo real con un modelo TensorFlow Lite que corre completamente en dispositivo — sin internet. También provee recomendaciones de tratamiento, historial de enfermedades, consejos de gestión del cultivo y conecta a los agricultores con recursos de agronomía. Diseñada para dispositivos Android de gama baja.",
+    },
+    highlights: {
+      en: [
+        "On-device disease detection with TensorFlow Lite (no internet needed)",
+        "Camera integration with real-time inference overlay",
+        "92%+ accuracy on trained disease classes",
+        "Offline-first architecture for rural connectivity",
+        "Treatment recommendations database",
+        "Designed for low-end Android devices",
+      ],
+      es: [
+        "Detección de enfermedades en dispositivo con TensorFlow Lite (sin internet)",
+        "Integración de cámara con inferencia en tiempo real",
+        "+92% de precisión en las clases de enfermedades entrenadas",
+        "Arquitectura offline-first para conectividad rural",
+        "Base de datos de recomendaciones de tratamiento",
+        "Diseñada para dispositivos Android de gama baja",
+      ],
+    },
+    stack: [
+      "Flutter",
+      "Dart",
+      "TensorFlow Lite",
+      "FastAPI",
+      "Python",
+      "Firebase",
+    ],
+    category: ["Mobile", "AI/ML", "Agriculture"],
+    links: {
+      github: "https://github.com/Lenas25/AgroLens",
+    },
+    svgShape: `<circle cx="65" cy="65" r="55" stroke="currentColor" stroke-width="2" opacity="0.2"/>
+      <path d="M20 65 Q65 10 110 65 Q65 120 20 65" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
+      <circle cx="65" cy="65" r="10" fill="currentColor" opacity="0.3"/>`,
+    color: "#C41E5B",
+  },
+  {
     id: "qhali",
     num: "07",
     status: "live",
@@ -293,136 +495,6 @@ export const projects: Project[] = [
     svgShape: `<polygon points="50,5 95,95 5,95" stroke="currentColor" stroke-width="2" opacity="0.3"/>
       <polygon points="50,30 80,85 20,85" stroke="currentColor" stroke-width="2" opacity="0.4"/>`,
     color: "#FF2D7B",
-  },
-  {
-    id: "agrolens",
-    num: "06",
-    status: "live",
-    title: {
-      en: "AgroLens — Disease Prediction App",
-      es: "AgroLens — App de Predicción de Enfermedades",
-    },
-    shortDesc: {
-      en: "Flutter mobile app using computer vision to detect diseases in mango crops, built for small farmers in Casma, Peru. Offline-first with ML on-device.",
-      es: "App móvil Flutter con visión computacional para detectar enfermedades en cultivos de mango, para agricultores de Casma, Perú. Offline-first con ML en dispositivo.",
-    },
-    fullDesc: {
-      en: "MangoAI is a Flutter mobile application built for small and medium mango farmers in Casma, Peru. Users can photograph mango leaves or fruits and the app detects diseases in real-time using a TensorFlow Lite model running entirely on-device — no internet required. The app also provides treatment recommendations, disease history, crop management tips, and connects farmers to agronomy resources. Designed for low-end Android devices with minimal data usage.",
-      es: "MangoAI es una aplicación Flutter para agricultores medianos de mango en Casma, Perú. Los usuarios fotografían hojas o frutos y la app detecta enfermedades en tiempo real con un modelo TensorFlow Lite que corre completamente en dispositivo — sin internet. También provee recomendaciones de tratamiento, historial de enfermedades, consejos de gestión del cultivo y conecta a los agricultores con recursos de agronomía. Diseñada para dispositivos Android de gama baja.",
-    },
-    highlights: {
-      en: [
-        "On-device disease detection with TensorFlow Lite (no internet needed)",
-        "Camera integration with real-time inference overlay",
-        "92%+ accuracy on trained disease classes",
-        "Offline-first architecture for rural connectivity",
-        "Treatment recommendations database",
-        "Designed for low-end Android devices",
-      ],
-      es: [
-        "Detección de enfermedades en dispositivo con TensorFlow Lite (sin internet)",
-        "Integración de cámara con inferencia en tiempo real",
-        "+92% de precisión en las clases de enfermedades entrenadas",
-        "Arquitectura offline-first para conectividad rural",
-        "Base de datos de recomendaciones de tratamiento",
-        "Diseñada para dispositivos Android de gama baja",
-      ],
-    },
-    stack: [
-      "Flutter",
-      "Dart",
-      "TensorFlow Lite",
-      "FastAPI",
-      "Python",
-      "Firebase",
-    ],
-    category: ["Mobile", "AI/ML", "Agriculture"],
-    links: {
-      github: "https://github.com/Lenas25/AgroLens",
-    },
-    svgShape: `<circle cx="65" cy="65" r="55" stroke="currentColor" stroke-width="2" opacity="0.2"/>
-      <path d="M20 65 Q65 10 110 65 Q65 120 20 65" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
-      <circle cx="65" cy="65" r="10" fill="currentColor" opacity="0.3"/>`,
-    color: "#C41E5B",
-  },
-  {
-    id: "alejandra-academia",
-    num: "03",
-    status: "freelance",
-    title: {
-      en: "Alejandra Academia — Spa Management",
-      es: "Alejandra Academia — Gestión de Spa",
-    },
-    shortDesc: {
-      en: "Complete academic management system for a spa academy. Course management, student dashboard, admin panel with landing page generator, grades, sessions, and CSV/PDF reporting.",
-      es: "Sistema completo de gestión académica para academia de spa. Gestión de cursos, panel de estudiantes, panel de administrador con generador de landing page, calificaciones, sesiones y reportes CSV/PDF.",
-    },
-    fullDesc: {
-      en: "Alejandra Academia is a comprehensive management system for a spa academy built with Next.js and NestJS. Features include course management with landing pages generated from the admin panel to showcase services, student dashboard for tracking progress, admin panel for managing all operations, automatic grade calculation and student rankings, session tracking and scheduling, and comprehensive data export (CSV and PDF) of student records. The system also includes an analytics dashboard with visual charts and metrics. Built on a similar architecture to an undergraduate/postgraduate academy system with automatic computation of grades, rankings, session management, and import/export capabilities. Deployed on Vercel and Railway.",
-      es: "Alejandra Academia es un sistema de gestión completo para una academia de spa construido con Next.js y NestJS. Incluye gestión de cursos con landing pages generadas desde el panel del administrador para mostrar servicios, panel de estudiantes para seguimiento de progreso, panel de administrador para gestionar todas las operaciones, cálculo automático de calificaciones y rankings de estudiantes, gestión y programación de sesiones, y exportación completa de datos (CSV y PDF) de registros de estudiantes. También incluye dashboard de analítica con gráficos y métricas visuales. Construido con arquitectura similar a un sistema de academia de pregrado/postgrado con cálculo automático de notas, rankings, gestión de sesiones e importación/exportación. Desplegado en Vercel y Railway.",
-    },
-    highlights: {
-      en: [
-        "Course management with dynamic landing page generation",
-        "Admin panel to showcase services and manage courses",
-        "Student dashboard with progress tracking",
-        "Automatic grade calculation and student ranking system",
-        "Session management and scheduling",
-        "CSV and PDF export of complete student records",
-        "Analytics dashboard with visual charts and metrics",
-        "Deployed on Vercel (frontend) and Railway (backend)",
-      ],
-      es: [
-        "Gestión de cursos con generación dinámica de landing pages",
-        "Panel de administrador para mostrar servicios y gestionar cursos",
-        "Dashboard de estudiantes con seguimiento de progreso",
-        "Cálculo automático de calificaciones y sistema de rankings",
-        "Gestión y programación de sesiones",
-        "Exportación en CSV y PDF de registros completos de estudiantes",
-        "Dashboard de analítica con gráficos y métricas visuales",
-        "Desplegado en Vercel (frontend) y Railway (backend)",
-      ],
-    },
-    stack: [
-      "Next.js",
-      "NestJS",
-      "PostgreSQL",
-      "Vercel",
-      "Railway",
-      "Tailwind CSS",
-      "TypeScript",
-    ],
-    category: ["Education", "SaaS", "Web App"],
-    links: { demo: "https://alejandracademia.com/" },
-    gallery: [
-      {
-        src: "/projects/alejandra-academia/landing.png",
-        alt: {
-          en: "Alejandra Academia Course Landing Page",
-          es: "Landing Page de Curso de Alejandra Academia",
-        },
-        caption: {
-          en: "Dynamic landing page generated from admin panel",
-          es: "Landing page dinámica generada desde el panel del administrador",
-        },
-      },
-      {
-        src: "/projects/alejandra-academia/dashboard.png",
-        alt: {
-          en: "Alejandra Academia Admin Dashboard",
-          es: "Dashboard de Administrador de Alejandra Academia",
-        },
-        caption: {
-          en: "Admin dashboard with course management and analytics",
-          es: "Dashboard de administrador con gestión de cursos y analítica",
-        },
-      },
-    ],
-    svgShape: `<line x1="10" y1="90" x2="30" y2="40" stroke="currentColor" stroke-width="3" opacity="0.4"/>
-      <line x1="30" y1="40" x2="50" y2="65" stroke="currentColor" stroke-width="3" opacity="0.4"/>
-      <line x1="50" y1="65" x2="70" y2="25" stroke="currentColor" stroke-width="3" opacity="0.4"/>
-      <line x1="70" y1="25" x2="90" y2="50" stroke="currentColor" stroke-width="3" opacity="0.4"/>`,
-    color: "#8B003B",
   },
   {
     id: "grown-home",
@@ -506,77 +578,5 @@ export const projects: Project[] = [
       <rect x="55" y="55" width="30" height="30" stroke="currentColor" stroke-width="2" opacity="0.4"/>
       <circle cx="50" cy="50" r="8" fill="currentColor" opacity="0.3"/>`,
     color: "#FF2D7B",
-  },
-  {
-    id: "decor-master-clean",
-    num: "04s",
-    status: "freelance",
-    title: {
-      en: "Decor Master Clean — Landing Page",
-      es: "Decor Master Clean — Landing Page",
-    },
-    shortDesc: {
-      en: "Custom landing page for cleaning services with conversion optimization. 65% sales increase achieved. Google Analytics, social media integration, and lead capture via email/WhatsApp.",
-      es: "Landing page personalizada para servicios de limpieza con optimización de conversión. 65% de aumento en ventas. Google Analytics, integración de redes sociales y captura de leads por email/WhatsApp.",
-    },
-    fullDesc: {
-      en: "Decor Clean Home is a fully custom landing page designed in Figma and built with Framer for a cleaning services business. The project achieved a 65% increase in sales compared to their previous non-digital presence. Features include fully personalized design optimized for conversion, Google Analytics integration for tracking visitor behavior and conversion metrics, social media link assignments, email and WhatsApp lead capture forms, call-to-action optimization, and seamless integration for customer acquisition. The page focuses on service showcase, testimonials, and streamlined contact options.",
-      es: "Decor Clean Home es una landing page totalmente personalizada diseñada en Figma y construida con Framer para un negocio de servicios de limpieza. El proyecto logró un aumento del 65% en ventas comparado con su ausencia digital anterior. Incluye diseño completamente personalizado optimizado para conversión, integración de Google Analytics para rastrear comportamiento de visitantes y métricas de conversión, asignación de enlaces de redes sociales, formularios de captura de leads por email y WhatsApp, optimización de llamadas a la acción, e integración fluida para adquisición de clientes. La página se enfoca en mostrar servicios, testimonios y opciones de contacto simplificadas.",
-    },
-    highlights: {
-      en: [
-        "Fully custom design created in Figma",
-        "Built with Framer for smooth interactions",
-        "65% sales increase from digital launch",
-        "Google Analytics integration for conversion tracking",
-        "Social media link assignments and CTAs",
-        "Email and WhatsApp lead capture forms",
-        "Optimized for mobile and desktop",
-        "Service showcase with testimonials and reviews",
-      ],
-      es: [
-        "Diseño completamente personalizado en Figma",
-        "Construido con Framer para interacciones suaves",
-        "+65% de aumento en ventas desde lanzamiento digital",
-        "Integración de Google Analytics para seguimiento de conversiones",
-        "Asignación de enlaces de redes sociales y CTAs",
-        "Formularios de captura de leads por email y WhatsApp",
-        "Optimizado para móvil y escritorio",
-        "Muestra de servicios con testimonios y reseñas",
-      ],
-    },
-    stack: ["Framer", "Figma", "Google Analytics", "HTML/CSS"],
-    category: ["Landing Page", "Web Design", "Conversions"],
-    links: { demo: "https://www.decormasterclean.com/" },
-    gallery: [
-      {
-        src: "/projects/decor-master-clean/landing.png",
-        alt: {
-          en: "Decor Master Clean Landing Page",
-          es: "Landing Page de Decor Master Clean",
-        },
-        caption: {
-          en: "Custom landing page design optimized for conversion",
-          es: "Diseño de landing page personalizada optimizada para conversión",
-        },
-      },
-      {
-        src: "/projects/decor-master-clean/email.png",
-        alt: {
-          en: "Decor Master Clean Lead Capture Form",
-          es: "Formulario de Captura de Leads de Decor Master Clean",
-        },
-        caption: {
-          en: "Email and WhatsApp lead capture forms integrated with Google Analytics",
-          es: "Formularios de captura de leads por email y WhatsApp integrados con Google Analytics",
-        },
-      },
-    ],
-
-    svgShape: `<rect x="15" y="15" width="70" height="70" stroke="currentColor" stroke-width="2" opacity="0.3"/>
-      <path d="M35 50 Q50 35 65 50" stroke="currentColor" stroke-width="2" fill="none" opacity="0.4"/>
-      <circle cx="30" cy="30" r="3" fill="currentColor" opacity="0.5"/>
-      <circle cx="70" cy="30" r="3" fill="currentColor" opacity="0.5"/>`,
-    color: "#C41E5B",
   },
 ];

@@ -10,6 +10,7 @@ import About from "./About";
 import SkillsTerminal from "./SkillsTerminal";
 import Projects from "./Projects";
 import Experience from "./Experience";
+import Testimonials from "./Testimonials";
 import { Contact, Footer } from "./Sections";
 import { KONAMI_CODE_DISPLAY } from "../hooks/useKonamiCode";
 
@@ -48,6 +49,7 @@ export default function App() {
         <SkillsTerminal lang={lang} />
         <Projects lang={lang} />
         <Experience lang={lang} />
+        <Testimonials lang={lang} />
         <Contact lang={lang} />
       </main>
       <Footer lang={lang} />

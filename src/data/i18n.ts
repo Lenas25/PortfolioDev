@@ -92,6 +92,14 @@ export const translations = {
       title1: "Where I've",
       title2: 'worked.',
     },
+    testimonials: {
+      label: 'Testimonials',
+      title1: 'What my',
+      title2: 'clients say.',
+      stat1: 'Happy clients',
+      stat2: 'Would recommend',
+      stat3: 'Average rating',
+    },
     toolbox: {
       label: 'Toolbox',
       title1: 'Tools I',
@@ -205,6 +213,14 @@ export const translations = {
       label: 'Experiencia',
       title1: 'Dónde he',
       title2: 'trabajado.',
+    },
+    testimonials: {
+      label: 'Testimonios',
+      title1: 'Lo que dicen',
+      title2: 'mis clientes.',
+      stat1: 'Clientes satisfechos',
+      stat2: 'Recomendarían',
+      stat3: 'Calificación promedio',
     },
     toolbox: {
       label: 'Caja de herramientas',

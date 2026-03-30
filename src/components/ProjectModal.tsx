@@ -439,8 +439,8 @@ export default function ProjectModal({ project, lang, onClose }: Props) {
         </div>
 
         <div className="project-modal-content" style={{ padding: "32px" }}>
-          {/* Gallery Carousel */}
-          {gallerySlides.length > 0 && (
+          {/* Gallery Carousel - Only show if real gallery images exist */}
+          {project.gallery?.length > 0 && (
             <div style={{ marginBottom: 28 }}>
               <div
                 style={{
