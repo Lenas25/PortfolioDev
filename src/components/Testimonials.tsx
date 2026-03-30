@@ -17,10 +17,10 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: "t1",
-    name: "Alejandra Suárez",
+    name: "Alejandra Díaz",
     role: "Fundadora",
     company: "Alejandra Academia",
-    avatar: "AS",
+    avatar: "AD",
     quote: {
       en: "Lena transformed our manual processes into an automated system that saves us hours every week. The landing page generator alone increased our student inquiries by 40%. Exceptional work and communication throughout.",
       es: "Lena transformó nuestros procesos manuales en un sistema automatizado que nos ahorra horas cada semana. El generador de landing pages aumentó nuestras consultas de estudiantes en un 40%. Trabajo excepcional y comunicación durante todo el proyecto.",
@@ -92,6 +92,22 @@ const testimonials: Testimonial[] = [
     project: {
       en: "KintsuMind Platform",
       es: "Plataforma KintsuMind",
+    },
+    rating: 5,
+  },
+  {
+    id: "t6",
+    name: "Fernando Ruiz",
+    role: "Director de Operaciones",
+    company: "TechFlow",
+    avatar: "FR",
+    quote: {
+      en: "Lena built us a complete n8n automation ecosystem that handles everything from lead capture to onboarding emails and CRM updates. What used to take our team 3 hours daily now runs automatically. She really understands business processes and how to translate them into reliable workflows.",
+      es: "Lena nos construyó un ecosistema completo de automatización con n8n que maneja todo desde la captura de leads hasta emails de onboarding y actualizaciones de CRM. Lo que antes nos tomaba 3 horas diarias ahora corre automáticamente. Ella realmente entiende los procesos de negocio y cómo traducirlos a flujos de trabajo confiables.",
+    },
+    project: {
+      en: "n8n Automation Ecosystem",
+      es: "Ecosistema de Automatización n8n",
     },
     rating: 5,
   },
